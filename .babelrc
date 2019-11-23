@@ -1,0 +1,25 @@
+{
+    "plugins": [
+        ["@babel/transform-react-jsx", { "pragma":"h" }],
+        ["module-resolver", {
+        "root": ["."],
+        "alias": {
+            "react": "preact-compat",
+            "react-dom": "preact-compat",
+            // Not necessary unless you consume a module using `createClass`
+            "create-react-class": "preact-compat/lib/create-react-class"
+        }
+        }]
+    ],
+    "presets": [
+        ["@babel/preset-env", {
+            "targets": {
+                "browsers": [
+                    ">0.25%",
+                    "not ie 11",
+                    "not op_mini all"
+                ]
+            }
+        }]
+    ]
+}

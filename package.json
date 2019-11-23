@@ -1,0 +1,53 @@
+{
+  "main": "index.js",
+  "husky": {
+    "hooks": {
+      "prepush": "./test/githook/prepush.sh",
+      "preversion": "npm run lint && npm test",
+      "postversion": "git push --no-verify && git push --tags --no-verify"
+    }
+  },
+  "scripts": {
+    "start": "node-sass src/style/main.scss --source-map-embed > public/style.css && concurrently --kill-others \"npm run serve\" \"npm run sass-watch\"",
+    "serve": "env $(cat .env | xargs) budo src/index.js:bundle.js --pushstate --dir=public --live -- -t babelify -g aliasify -t [ envify --NODE_ENV development ] -dv",
+    "build": "npm run build-js && npm run build-css",
+    "build-js": "browserify -p bundle-collapser/plugin example/index.js -t babelify -t [ envify --NODE_ENV production ] -g aliasify -g unassertify | uglifyjs -mc > public/bundle.js",
+    "build-css": "node-sass --output-style=compressed src/style/main.scss > public/style.css",
+    "sass-watch": "node-sass --watch src/style/main.scss --source-map-embed public/style.css",
+    "lint": "eslint . --config .eslintrc",
+    "test": "tape test/{**/*,*}.js",
+    "test-browser": "browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec"
+  },
+  "dependencies": {
+    "@nichoth/ok": "0.0.2",
+    "observ": "^0.2.0",
+    "observ-struct": "^6.0.0",
+    "preact": "^10.0.5",
+    "ruta3": "^2.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-transform-react-jsx": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "aliasify": "^2.1.0",
+    "babel-eslint": "^10.0.3",
+    "babelify": "^10.0.0",
+    "browserify": "^16.5.0",
+    "budo": "^11.6.3",
+    "bundle-collapser": "^1.3.0",
+    "concurrently": "^5.0.0",
+    "envify": "^4.1.0",
+    "eslint": "^6.6.0",
+    "eslint-config-minlint": "^2.0.0",
+    "eslint-plugin-react": "^7.16.0",
+    "husky": "^3.1.0",
+    "inline-htmlify": "^2.0.1",
+    "node-sass": "^4.13.0",
+    "preact-compat": "^3.19.0",
+    "tap-spec": "^5.0.0",
+    "tape-run": "^6.0.1",
+    "uglify-js": "^3.6.9",
+    "unassertify": "^2.1.1"
+  }
+}
