@@ -22,8 +22,8 @@
     "@nichoth/ok": "0.0.2",
     "observ": "^0.2.0",
     "observ-struct": "^6.0.0",
-    "preact": "^10.0.5",
-    "ruta3": "^2.0.1"
+    "ruta3": "^2.0.1",
+    "preact": "^8.5.3"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",

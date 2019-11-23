@@ -1,5 +1,5 @@
-var ok = require('../')
-var { h } = require('preact')
+var ok = require('@nichoth/ok')
+var { h, render } = require('preact')
 var EVENTS = require('@nichoth/events/namespace')({
     hello: ['world']
 })
@@ -13,11 +13,12 @@ var state = struct({
 })
 
 function subscribe({ state, view }) {
-    view.on(EVENTS.hello.world, () => state.foo.set('bar'))
+   view.on(EVENTS.hello.world, () => state.foo.set('bar'))
 }
 
 var router = Router()
 router.addRoute('/', function foo (match) {
+    console.log('m', match)
     return function (props) {
         console.log('props', props)
         return <div>foo</div>
@@ -28,6 +29,7 @@ function View (props) {
     var { emit } = props
     if (props.route.pathname) var m = router.match(props.route.pathname)
     if (m) var RouteView = m.action(m)
+    console.log('props', props)
     return <div>
         <RouteView {...props} />
         <hr />
