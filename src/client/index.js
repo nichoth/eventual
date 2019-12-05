@@ -24,8 +24,8 @@ function start (cb) {
 
             // optional, muxrpc manifest. Defaults to ~/.ssb/manifest.json
             manifest: manifest
-
         },
+
         function (err, sbot, config) {
             cb(err, sbot, config)
             console.log('cb', err, sbot)
