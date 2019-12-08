@@ -37,7 +37,7 @@ module.exports = connectSbot
 // ...
 // })
 
-function start (cb) {
+// function start (cb) {
     // var keys = ssbKeys.loadOrCreateSync('./app-private.key')
     // ssbClient(
     //     keys,                // optional, defaults to ~/.ssb/secret
@@ -61,7 +61,7 @@ function start (cb) {
     //     }
     // )
 
-}
+// }
 
 // if (require.main === module) {
 //     start()

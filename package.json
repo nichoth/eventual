@@ -8,7 +8,7 @@
     }
   },
   "scripts": {
-    "start": "node-sass src/style/main.scss --source-map-embed > public/style.css && concurrently --kill-others \"node src/server.js\" \"npm run serve\" \"npm run sass-watch\"",
+    "start": "node-sass src/style/main.scss --source-map-embed > public/style.css && concurrently --kill-others \"node src/server/index.js\" \"npm run serve\" \"npm run sass-watch\"",
     "serve": "env $(cat .env | xargs) budo src/index.js:bundle.js --pushstate --dir=public --live -- -t babelify -g aliasify -t [ envify --NODE_ENV development ] -dv",
     "build": "npm run build-js && npm run build-css",
     "build-js": "browserify -p bundle-collapser/plugin example/index.js -t babelify -t [ envify --NODE_ENV production ] -g aliasify -g unassertify | uglifyjs -mc > public/bundle.js",

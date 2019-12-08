@@ -1,5 +1,12 @@
 var sbot = require('ssb-server')
+var http = require('http')
+var url = require('url')
+var ws = require('pull-ws/server')
+var muxrpc = require('muxrpc')
+var S = require('pull-stream')
 // var config = require('ssb-config')
+
+var manifest = {"auth":"async","address":"sync","manifest":"sync","multiserver":{"parse":"sync","address":"sync"},"multiserverNet":{},"get":"async","createFeedStream":"source","createLogStream":"source","messagesByType":"source","createHistoryStream":"source","createUserStream":"source","createWriteStream":"sink","links":"source","add":"async","publish":"async","getAddress":"sync","getLatest":"async","latest":"source","latestSequence":"async","whoami":"sync","progress":"sync","status":"sync","getVectorClock":"async","version":"sync","help":"sync","seq":"async","usage":"sync","clock":"async","gossip":{"add":"sync","remove":"sync","connect":"async","disconnect":"async","changes":"source","reconnect":"sync","disable":"sync","enable":"sync","ping":"duplex","get":"sync","peers":"sync","help":"sync"},"replicate":{"changes":"source","upto":"source","request":"sync","block":"sync"},"backlinks":{"read":"source"}}
 
 // // add plugins
 // Server
@@ -66,11 +73,33 @@ function startSSB () {
         // .use(require('scuttlebot/plugins/local'))
         .call(null, config)
 
+    var server = http.createServer(function onRequest (req, res) {
+        console.log('got request')
+        var { pathname } = url.parse(req.url)
+        console.log('req pathname', pathname)
+    }).listen(8000, function (err) {
+        if (err) throw err
+        console.log('listening on 8000')
+    })
+
+    ws({ server }, function onConnection (wsStream) {
+        console.log('got ws connection')
+
+        // arguments are (remote, local)
+        var rpcServer = muxrpc(null, manifest)(sbot)
+        var rpcServerStream = rpcServer.createStream(function onEnd (err) {
+            console.log('rpc stream close', err)
+        })
+
+        S(wsStream, rpcServerStream, wsStream)
+    })
+
     return _sbot
 }
 
-module.exports = startSSB
 
 if (require.main === module) {
     startSSB()
 }
+
+module.exports = startSSB
