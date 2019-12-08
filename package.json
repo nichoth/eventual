@@ -17,8 +17,7 @@
     "lint": "eslint . --config .eslintrc",
     "test": "tape test/{**/*,*}.js",
     "test-browser": "browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec"
-  }
- ,
+  },
   "dependencies": {
     "@nichoth/ok": "0.0.2",
     "muxrpc": "^6.4.8",
