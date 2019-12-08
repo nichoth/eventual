@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node-sass src/style/main.scss --source-map-embed > public/style.css && concurrently --kill-others \"node src/server/index.js\" \"npm run serve\" \"npm run sass-watch\"",
-    "serve": "env $(cat .env | xargs) budo src/index.js:bundle.js --pushstate --dir=public --live -- -t babelify -g aliasify -t [ envify --NODE_ENV development ] -dv",
+    "serve": "env $(cat .env | xargs) budo src/index.js:bundle.js --pushstate --dir=public --live -- -t babelify -g aliasify -t envify -dv",
     "build": "npm run build-js && npm run build-css",
     "build-js": "browserify -p bundle-collapser/plugin example/index.js -t babelify -t [ envify --NODE_ENV production ] -g aliasify -g unassertify | uglifyjs -mc > public/bundle.js",
     "build-css": "node-sass --output-style=compressed src/style/main.scss > public/style.css",
@@ -17,7 +17,8 @@
     "lint": "eslint . --config .eslintrc",
     "test": "tape test/{**/*,*}.js",
     "test-browser": "browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec"
-  },
+  }
+ ,
   "dependencies": {
     "@nichoth/ok": "0.0.2",
     "muxrpc": "^6.4.8",
