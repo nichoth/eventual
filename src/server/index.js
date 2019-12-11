@@ -25,26 +25,24 @@ var path = require('path')
 
 // @TODO check if global sbot is running and use that if possible
 function startSSB () {
-    var {
-        SBOT_SHS,
-        SBOT_SIGN,
-        APP_NAME,
-        NODE_ENV
-    } = process.env
-    console.log('env', SBOT_SHS, SBOT_SIGN, APP_NAME, NODE_ENV)
-    console.log('aaaa', process.env.NODE_ENV)
+    // var {
+    //     SBOT_SHS,
+    //     SBOT_SIGN,
+    //     APP_NAME,
+    //     NODE_ENV
+    // } = process.env
 
     // use dev database
-    var appName = APP_NAME ? APP_NAME : (NODE_ENV === 'development' ?
-        'ssb-ev-DEV' : 'ssb-ev')
+    var appName = process.env.APP_NAME = (process.env.NODE_ENV ===
+        'development' ? 'ssb-ev-DEV' : 'ssb-ev')
 
     var opts = {}
-    if (process.env.NODE_ENV === 'development') {
-        // opts.caps = {
-        //     shs: SBOT_SHS,
-        //     sign: SBOT_SIGN
-        // }
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //     // opts.caps = {
+    //     //     shs: SBOT_SHS,
+    //     //     sign: SBOT_SIGN
+    //     // }
+    // }
 
     var config = ssbConfigInject(appName, opts)
     console.log('config', config)
