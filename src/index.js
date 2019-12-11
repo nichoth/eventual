@@ -14,8 +14,10 @@ var state = struct({
 
 var Client = require('./client')
 
-Client({}, function (err, sbot) {
-    console.log('ok', err, sbot)
+var sbot
+Client({}, function (err, _sbot) {
+    sbot = _sbot
+    console.log('client', err, sbot)
 })
 
 function subscribe({ state, view }) {

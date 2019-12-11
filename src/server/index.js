@@ -5,6 +5,7 @@ var ws = require('pull-ws/server')
 var muxrpc = require('muxrpc')
 var S = require('pull-stream')
 // var config = require('ssb-config')
+var WS_PORT = 8000
 
 var manifest = {"auth":"async","address":"sync","manifest":"sync","multiserver":{"parse":"sync","address":"sync"},"multiserverNet":{},"get":"async","createFeedStream":"source","createLogStream":"source","messagesByType":"source","createHistoryStream":"source","createUserStream":"source","createWriteStream":"sink","links":"source","add":"async","publish":"async","getAddress":"sync","getLatest":"async","latest":"source","latestSequence":"async","whoami":"sync","progress":"sync","status":"sync","getVectorClock":"async","version":"sync","help":"sync","seq":"async","usage":"sync","clock":"async","gossip":{"add":"sync","remove":"sync","connect":"async","disconnect":"async","changes":"source","reconnect":"sync","disable":"sync","enable":"sync","ping":"duplex","get":"sync","peers":"sync","help":"sync"},"replicate":{"changes":"source","upto":"source","request":"sync","block":"sync"},"backlinks":{"read":"source"}}
 
@@ -31,17 +32,18 @@ function startSSB () {
         NODE_ENV
     } = process.env
     console.log('env', SBOT_SHS, SBOT_SIGN, APP_NAME, NODE_ENV)
+    console.log('aaaa', process.env.NODE_ENV)
 
     // use dev database
-    var appName = NODE_ENV === 'development' ? 'evt-DEV' : undefined
-    appName = APP_NAME ? APP_NAME : appName
+    var appName = APP_NAME ? APP_NAME : (NODE_ENV === 'development' ?
+        'ssb-ev-DEV' : 'ssb-ev')
 
     var opts = {}
     if (process.env.NODE_ENV === 'development') {
-        opts.caps = {
-            shs: SBOT_SHS,
-            sign: SBOT_SIGN
-        }
+        // opts.caps = {
+        //     shs: SBOT_SHS,
+        //     sign: SBOT_SIGN
+        // }
     }
 
     var config = ssbConfigInject(appName, opts)
@@ -77,7 +79,7 @@ function startSSB () {
         console.log('got request')
         var { pathname } = url.parse(req.url)
         console.log('req pathname', pathname)
-    }).listen(8000, function (err) {
+    }).listen(WS_PORT, function (err) {
         if (err) throw err
         console.log('listening on 8000')
     })
