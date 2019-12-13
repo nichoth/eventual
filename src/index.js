@@ -14,21 +14,18 @@ var state = struct({
 
 var Client = require('./client')
 
-var sbot
-Client({}, function (err, _sbot) {
-    sbot = _sbot
-    console.log('client', err, sbot)
-})
-
-function subscribe({ state, view }) {
-    view.on(EVENTS.hello.world, () => state.foo.set('bar'))
-}
-
 var router = Router()
 router.addRoute('/', function foo (match) {
     return function (props) {
         return <div>foo</div>
     }
+})
+
+Client({}, function (err, sbot) {
+    console.log('client', err, sbot)
+    sbot.whoami(function (err, who) {
+        console.log('who', err, who)
+    })
 })
 
 function View (props) {
@@ -46,6 +43,10 @@ function View (props) {
 
 var { view } = ok(state, View, document.getElementById('content'))
 subscribe({ state, view })
+
+function subscribe({ state, view }) {
+    view.on(EVENTS.hello.world, () => state.foo.set('bar'))
+}
 
 if (process.env.NODE_ENV === 'development') {
     window.app = { state, view, EVENTS }
