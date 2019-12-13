@@ -6,7 +6,6 @@ var muxrpc = require('muxrpc')
 var S = require('pull-stream')
 // var config = require('ssb-config')
 var WS_PORT = 8000
-
 var manifest = {"auth":"async","address":"sync","manifest":"sync","multiserver":{"parse":"sync","address":"sync"},"multiserverNet":{},"get":"async","createFeedStream":"source","createLogStream":"source","messagesByType":"source","createHistoryStream":"source","createUserStream":"source","createWriteStream":"sink","links":"source","add":"async","publish":"async","getAddress":"sync","getLatest":"async","latest":"source","latestSequence":"async","whoami":"sync","progress":"sync","status":"sync","getVectorClock":"async","version":"sync","help":"sync","seq":"async","usage":"sync","clock":"async","gossip":{"add":"sync","remove":"sync","connect":"async","disconnect":"async","changes":"source","reconnect":"sync","disable":"sync","enable":"sync","ping":"duplex","get":"sync","peers":"sync","help":"sync"},"replicate":{"changes":"source","upto":"source","request":"sync","block":"sync"},"backlinks":{"read":"source"}}
 
 // // add plugins
@@ -45,7 +44,7 @@ function startSSB () {
     // }
 
     var config = ssbConfigInject(appName, opts)
-    console.log('config', config)
+    // console.log('config', config)
 
     var keyPath = path.join(config.path, 'secret')
     config.keys = ssbKeys.loadOrCreateSync(keyPath)
@@ -86,7 +85,7 @@ function startSSB () {
         console.log('got ws connection')
 
         // arguments are (remote, local)
-        var rpcServer = muxrpc(null, manifest)(sbot)
+        var rpcServer = muxrpc(null, manifest)(_sbot)
         var rpcServerStream = rpcServer.createStream(function onEnd (err) {
             console.log('rpc stream close', err)
         })
@@ -96,7 +95,6 @@ function startSSB () {
 
     return _sbot
 }
-
 
 if (require.main === module) {
     startSSB()

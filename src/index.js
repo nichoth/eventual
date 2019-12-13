@@ -6,12 +6,10 @@ var EVENTS = require('@nichoth/events/namespace')({
 var struct = require('observ-struct')
 var observ = require('observ')
 var Router = require('ruta3')
-
 var state = struct({
     foo: observ('world'),
     route: struct({})  // required
 })
-
 var Client = require('./client')
 
 var router = Router()

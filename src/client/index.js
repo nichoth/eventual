@@ -1,7 +1,6 @@
 // var ssbClient = require('ssb-client')
 // var ssbKeys = require('ssb-keys')
 var manifest = {"auth":"async","address":"sync","manifest":"sync","multiserver":{"parse":"sync","address":"sync"},"multiserverNet":{},"get":"async","createFeedStream":"source","createLogStream":"source","messagesByType":"source","createHistoryStream":"source","createUserStream":"source","createWriteStream":"sink","links":"source","add":"async","publish":"async","getAddress":"sync","getLatest":"async","latest":"source","latestSequence":"async","whoami":"sync","progress":"sync","status":"sync","getVectorClock":"async","version":"sync","help":"sync","seq":"async","usage":"sync","clock":"async","gossip":{"add":"sync","remove":"sync","connect":"async","disconnect":"async","changes":"source","reconnect":"sync","disable":"sync","enable":"sync","ping":"duplex","get":"sync","peers":"sync","help":"sync"},"replicate":{"changes":"source","upto":"source","request":"sync","block":"sync"},"backlinks":{"read":"source"}}
-
 var S = require('pull-stream')
 var wsClient = require('pull-ws/client')
 var muxrpc = require('muxrpc')
@@ -23,6 +22,8 @@ function connectSbot ({ onClose } = {}, cb) {
             if (onClose) onClose(err)
         })
         S(wsStream, rpcStream, wsStream)
+
+        console.log('sbot', sbot)
 
         cb(null, sbot)
     }
