@@ -20,7 +20,7 @@ router.addRoute('/', function foo (match) {
 })
 
 Client({}, function (err, sbot) {
-    console.log('client', err, sbot)
+    // console.log('client', err, sbot)
     sbot.whoami(function (err, who) {
         console.log('who', err, who)
     })
