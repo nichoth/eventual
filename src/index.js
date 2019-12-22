@@ -1,7 +1,6 @@
 var ok = require('@nichoth/ok')
 var struct = require('observ-struct')
 var observ = require('observ')
-var EVENTS = require('./EVENTS')
 var state = struct({
     foo: observ('world'),
     route: struct({})  // required
@@ -17,9 +16,8 @@ Client({}, function (err, sbot) {
 })
 
 var { view } = ok(state, View, document.getElementById('content'))
-
 subscribe({ state, view })
 
 if (process.env.NODE_ENV === 'development') {
-    window.app = { state, view, EVENTS }
+    window.app = { state, view, EVENTS: require('./EVENTS') }
 }
