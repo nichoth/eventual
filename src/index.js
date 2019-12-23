@@ -14,10 +14,10 @@ Client({}, function (err, sbot) {
     sbot.whoami(function (err, who) {
         console.log('who', err, who)
     })
+    subscribe({ state, view, sbot })
 })
 
 var { view } = ok(state, View, document.getElementById('content'))
-subscribe({ state, view })
 
 if (process.env.NODE_ENV === 'development') {
     window.app = { state, view, EVENTS: require('./EVENTS') }
