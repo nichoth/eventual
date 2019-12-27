@@ -4,10 +4,10 @@ var url = require('url')
 var ws = require('pull-ws/server')
 var muxrpc = require('muxrpc')
 var S = require('pull-stream')
+var caps = require('../caps.json')
 // var config = require('ssb-config')
 var WS_PORT = 8000
 var manifest = {"auth":"async","address":"sync","manifest":"sync","multiserver":{"parse":"sync","address":"sync"},"multiserverNet":{},"get":"async","createFeedStream":"source","createLogStream":"source","messagesByType":"source","createHistoryStream":"source","createUserStream":"source","createWriteStream":"sink","links":"source","add":"async","publish":"async","getAddress":"sync","getLatest":"async","latest":"source","latestSequence":"async","whoami":"sync","progress":"sync","status":"sync","getVectorClock":"async","version":"sync","help":"sync","seq":"async","usage":"sync","clock":"async","gossip":{"add":"sync","remove":"sync","connect":"async","disconnect":"async","changes":"source","reconnect":"sync","disable":"sync","enable":"sync","ping":"duplex","get":"sync","peers":"sync","help":"sync"},"replicate":{"changes":"source","upto":"source","request":"sync","block":"sync"},"backlinks":{"read":"source"}}
-var caps = require('../caps.json')
 
 // // add plugins
 // Server
@@ -33,8 +33,8 @@ function startSSB () {
     // } = process.env
 
     // use dev database
-    var appName = process.env.APP_NAME = (process.env.NODE_ENV ===
-        'development' ? 'ssb-ev-DEV' : 'ssb-ev')
+    var appName = (process.env.NODE_ENV === 'development' ?
+        'ssb-ev-DEV' : 'ssb-ev')
 
     var opts = {}
     opts.caps = caps
