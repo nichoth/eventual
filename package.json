@@ -2,9 +2,9 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "prepush": "./test/githook/prepush.sh",
-      "preversion": "npm run lint && npm test",
-      "postversion": "git push --no-verify && git push --tags --no-verify"
+      "pre-push": "./test/githook/prepush.sh",
+      "pre-version": "npm run lint && npm test",
+      "post-version": "git push --no-verify && git push --tags --no-verify"
     }
   },
   "scripts": {
