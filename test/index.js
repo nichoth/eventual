@@ -1,6 +1,10 @@
 var test = require('tape')
+var App = require('../src')
 
-test('example', function (t) {
-    t.pass('ok')
-    t.end()
+test('doesnt explode', function (t) {
+    App(function (err, sbot) {
+        t.error(err)
+        t.ok(sbot)
+        t.end()
+    })
 })

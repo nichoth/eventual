@@ -5,20 +5,34 @@ var Client = require('./client')
 var View = require('./view')
 var subscribe = require('./subscribe')
 
-var state = struct({
-    foo: observ('world'),
-    route: struct({})  // required
-})
-
-Client({}, function (err, sbot) {
-    sbot.whoami(function (err, who) {
-        console.log('who', err, who)
+function start (cb) {
+    var state = struct({
+        foo: observ('world'),
+        route: struct({})  // required
     })
-    subscribe({ state, view, sbot })
-})
 
-var { view } = ok(state, View, document.getElementById('content'))
+    var { view } = ok(state, View, document.getElementById('content'))
 
-if (process.env.NODE_ENV === 'development') {
-    window.app = { state, view, EVENTS: require('./EVENTS') }
+    Client({}, function (err, sbot) {
+        if (err) {
+            if (cb) return cb(err)
+            throw err
+        }
+        // sbot.whoami(function (err, who) {
+        //     console.log('who', err, who)
+        // })
+        subscribe({ state, view, sbot })
+        if (cb) cb(null, sbot)
+    })
+
+    if (process.env.NODE_ENV === 'development') {
+        if (!window) return
+        window.app = { state, view, EVENTS: require('./EVENTS') }
+    }
 }
+
+if (require.main === module) {
+    start()
+}
+
+module.exports = start
