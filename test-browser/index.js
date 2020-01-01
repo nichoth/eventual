@@ -5,6 +5,10 @@ test('doesnt explode', function (t) {
     App(function (err, sbot) {
         t.error(err)
         t.ok(sbot)
-        t.end()
+        sbot.close(function (err) {
+            console.log('close', err)
+            t.end()
+        })
     })
 })
+
