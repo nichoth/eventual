@@ -6,7 +6,6 @@ test('doesnt explode', function (t) {
         t.error(err)
         t.ok(sbot)
         sbot.close(function (err) {
-            console.log('close', err)
             t.end()
         })
     })
