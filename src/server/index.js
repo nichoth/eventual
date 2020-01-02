@@ -102,6 +102,7 @@ if (require.main === module) {
     startSSB()
 }
 
+// for tests in test-browser
 process.on('SIGTERM', function () {
     process.exit(0)
 })

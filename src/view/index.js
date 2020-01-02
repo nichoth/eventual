@@ -1,5 +1,5 @@
-var router = require('../routes')
 var { h } = require('preact')
+var router = require('../routes')
 var EVENTS = require('../EVENTS')
 
 function View (props) {
@@ -16,3 +16,4 @@ function View (props) {
 }
 
 module.exports = View
+
