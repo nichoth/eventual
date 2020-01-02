@@ -1,16 +1,11 @@
 var ok = require('@nichoth/ok')
-var struct = require('observ-struct')
-var observ = require('observ')
 var Client = require('./client')
-var View = require('./view')
 var subscribe = require('./subscribe')
+var State = require('./state')
+var View = require('./view')
 
 function start (cb) {
-    var state = struct({
-        foo: observ('world'),
-        route: struct({})  // required
-    })
-
+    var state = State()
     var { view } = ok(state, View, document.getElementById('content'))
 
     Client({}, function (err, sbot) {
@@ -36,3 +31,4 @@ if (require.main === module) {
 }
 
 module.exports = start
+

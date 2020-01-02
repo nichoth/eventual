@@ -19,7 +19,7 @@
     "test-browser": "concurrently --kill-others \"node src/server/index.js\" \"browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec\""
   },
   "dependencies": {
-    "@nichoth/ok": "0.0.2",
+    "@nichoth/ok": "^2.0.0",
     "muxrpc": "^6.4.8",
     "observ": "^0.2.0",
     "observ-struct": "^6.0.0",
