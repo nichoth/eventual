@@ -3,6 +3,7 @@ var Client = require('./client')
 var subscribe = require('./subscribe')
 var State = require('./state')
 var View = require('./view')
+var evs = require('./EVENTS')
 
 function start (cb) {
     var state = State()
@@ -21,14 +22,14 @@ function start (cb) {
     })
 
     if (process.env.NODE_ENV === 'development') {
-        if (!window) return
-        window.app = { state, view, EVENTS: require('./EVENTS') }
+        window.app = { state, view, EVENTS: evs }
     }
 }
+
+console.log('foooo')
 
 if (require.main === module) {
     start()
 }
 
 module.exports = start
-

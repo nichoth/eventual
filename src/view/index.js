@@ -1,11 +1,15 @@
 var { h } = require('preact')
-var router = require('../routes')
+// var router = require('../routes')
+var Router = require('../routes')
 var EVENTS = require('../EVENTS')
 
 function View (props) {
+    console.log('view')
     var { emit } = props
+    var router = Router()
     if (props.route.pathname) var m = router.match(props.route.pathname)
     if (m) var RouteView = m.action(m)
+    console.log('m', m)
 
     return <div>
         <RouteView {...props} />
@@ -16,4 +20,3 @@ function View (props) {
 }
 
 module.exports = View
-
