@@ -17,20 +17,20 @@ Client({}, function (err, sbot) {
 
     S(
         sbot.createFeedStream(),
-        S.through(console.log.bind(console)),
+        S.through(console.log.bind(console, 'post')),
         S.onEnd(function (err) {
             console.log('done', err)
         })
     )
 
-    var msg = {
-        type: 'post',
-        test: 'first post'
-    }
+    // var msg = {
+    //     type: 'post',
+    //     test: 'first post'
+    // }
     // sbot.publish(msg, function (err, data) {
     //     console.log('pub', err, data)
     // })
-    
+
     // sbot.whoami(function (err, who) {
     //     console.log('who', err, who)
     // })
