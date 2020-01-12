@@ -9,6 +9,7 @@ var getAvatar = require('ssb-avatar')
 
 var state = State()
 var { view } = ok(state, View, document.getElementById('content'))
+var stuff = {}
 
 // how to set you name?
 Client({}, function (err, sbot) {
@@ -19,12 +20,29 @@ Client({}, function (err, sbot) {
 
     sbot.whoami(function (err, { id }) {
         if (err) throw err
-        getAvatar(sbot, id, id, function (err, stuff) {
+        stuff.id = id
+        getAvatar(sbot, id, id, function (err, _stuff) {
             if (err) throw err
-            console.log('stuff', stuff)
-            state.me.set(stuff)
+            console.log('stuff', _stuff)
+            state.me.set(_stuff)
         })
     })
+
+    function setName ({ id, name }, cb) {
+        sbot.publish({
+            type: 'about',
+            about: id,
+            name: name
+        }, cb)
+    }
+
+    function setAvatar ({ id, fileId }, cb) {
+        sbot.publish({
+            type: 'about',
+            about: id,
+            image: fileId
+        }, cb)
+    }
 
     S(
         sbot.createFeedStream(),
