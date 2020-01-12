@@ -21,10 +21,10 @@ Client({}, function (err, sbot) {
     sbot.whoami(function (err, { id }) {
         if (err) throw err
         stuff.id = id
-        getAvatar(sbot, id, id, function (err, _stuff) {
+        getAvatar(sbot, id, id, function (err, profile) {
             if (err) throw err
-            console.log('stuff', _stuff)
-            state.me.set(_stuff)
+            console.log('stuff', profile)
+            state.me.set(profile)
         })
     })
 
@@ -69,3 +69,4 @@ Client({}, function (err, sbot) {
 if (process.env.NODE_ENV === 'development') {
     window.app = { state, view, EVENTS: evs }
 }
+
