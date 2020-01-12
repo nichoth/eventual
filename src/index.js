@@ -5,15 +5,26 @@ var State = require('./state')
 var View = require('./view')
 var evs = require('./EVENTS')
 var S = require('pull-stream')
+var getAvatar = require('ssb-avatar')
 
 var state = State()
 var { view } = ok(state, View, document.getElementById('content'))
 
+// how to set you name?
 Client({}, function (err, sbot) {
     if (err) {
         throw err
     }
     console.log('sbot', sbot)
+
+    sbot.whoami(function (err, { id }) {
+        if (err) throw err
+        getAvatar(sbot, id, id, function (err, stuff) {
+            if (err) throw err
+            console.log('stuff', stuff)
+            state.me.set(stuff)
+        })
+    })
 
     S(
         sbot.createFeedStream(),

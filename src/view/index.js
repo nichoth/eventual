@@ -12,7 +12,11 @@ function View (props) {
     }
 
     return <div>
-        hello {props.foo + ' '}
+        <div className="menu">
+
+            <a href="/new">+</a>
+        </div>
+
         <hr />
         <RouteView {...props} />
         <button onClick={emit(EVENTS.hello.world)}>emit event</button>
@@ -20,3 +24,4 @@ function View (props) {
 }
 
 module.exports = View
+
