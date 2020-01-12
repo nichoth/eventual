@@ -13,7 +13,9 @@ function View (props) {
 
     return <div>
         <div className="menu">
-            <div>{props.me.name ? props.me.name : ''}</div>
+            <div>
+                {props.me.name ? props.me.name : ''} ✏️
+            </div>
             <a href="/new">+</a>
         </div>
 
