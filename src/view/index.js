@@ -5,13 +5,41 @@ var EVENTS = require('../EVENTS')
 class EditableField extends Component {
     constructor() {
         super()
-        this.state = {}
+        this.state = {
+            isEditing: false
+        }
+        this.edit = this.edit.bind(this)
+        this.noEdit = this.noEdit.bind(this)
+        this.save = this.save.bind(this)
+    }
+
+    edit(ev) {
+        ev.preventDefault()
+        this.setState({ isEditing: true })
+    }
+
+    noEdit (ev) {
+        ev.preventDefault()
+        this.setState({ isEditing: false })
+    }
+
+    save (ev) {
+        ev.preventDefault()
+        console.log('save', ev)
     }
 
     render (props, state) {
         // pencil emoji
+        if (state.isEditing) {
+            return <form onSubmit={this.save}>
+                <input value={props.name} />
+                <button type="submit">save</button>
+                <button onClick={this.noEdit}>cancel</button>
+            </form>
+        }
+
         return <span>
-            {props.name} <button>✏</button>
+            {props.name} <button onClick={this.edit}>✏</button>
         </span>
     }
 }
