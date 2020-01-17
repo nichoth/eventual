@@ -1,4 +1,4 @@
-var { h } = require('preact')
+var { h, Component } = require('preact')
 var Router = require('../routes')
 var EVENTS = require('../EVENTS')
 
@@ -11,11 +11,24 @@ function View (props) {
         return <div>Couldnt find that path</div>
     }
 
+    class EditableField extends Component {
+        constructor() {
+            super()
+            this.state = {}
+        }
+
+        render (props, state) {
+            return <span>foo </span>
+        }
+    }
+
+    var field = props.me.name ?
+        <EditableField name={props.me.name} /> :
+        ''
+
     return <div>
         <div className="menu">
-            <div>
-                {props.me.name ? props.me.name : ''} ✏️
-            </div>
+            {field}
             <a href="/new">+</a>
         </div>
 
@@ -24,6 +37,8 @@ function View (props) {
         <button onClick={emit(EVENTS.hello.world)}>emit event</button>
     </div>
 }
+
+
 
 module.exports = View
 

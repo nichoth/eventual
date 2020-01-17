@@ -11,7 +11,7 @@ var state = State()
 var { view } = ok(state, View, document.getElementById('content'))
 var stuff = {}
 
-// how to set you name?
+// how to set your name?
 Client({}, function (err, sbot) {
     if (err) {
         throw err
