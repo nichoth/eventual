@@ -1,49 +1,7 @@
-var { h, Component } = require('preact')
+var { h } = require('preact')
+var EditableField = require('./editable-field')
 var Router = require('../routes')
-var EVENTS = require('../EVENTS')
-
-class EditableField extends Component {
-    constructor() {
-        super()
-        this.state = {
-            isEditing: false
-        }
-        this.edit = this.edit.bind(this)
-        this.noEdit = this.noEdit.bind(this)
-        this.save = this.save.bind(this)
-    }
-
-    edit(ev) {
-        ev.preventDefault()
-        this.setState({ isEditing: true })
-    }
-
-    noEdit (ev) {
-        ev.preventDefault()
-        this.setState({ isEditing: false })
-    }
-
-    save (ev) {
-        ev.preventDefault()
-        console.log('save', ev)
-    }
-
-    render (props, state) {
-        // pencil emoji
-        if (state.isEditing) {
-            return <form onSubmit={this.save}>
-                <input value={props.name} />
-                <button type="submit">save</button>
-                <button onClick={this.noEdit}>cancel</button>
-            </form>
-        }
-
-        return <span>
-            {props.name} <button onClick={this.edit}>✏</button>
-        </span>
-    }
-}
-
+var evs = require('../EVENTS')
 
 function View (props) {
     var { emit } = props
@@ -55,7 +13,9 @@ function View (props) {
     }
 
     var field = props.me.name ?
-        <EditableField name={props.me.name} /> :
+        (<EditableField
+            name={props.me.name}
+            onSave={emit(evs.profile.save)} />) :
         ''
 
     return <div>
@@ -65,7 +25,7 @@ function View (props) {
 
         <hr />
         <RouteView {...props} />
-        <button onClick={emit(EVENTS.hello.world)}>emit event</button>
+        <button onClick={emit(evs.hello.world)}>emit event</button>
     </div>
 }
 
