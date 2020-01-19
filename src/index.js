@@ -26,7 +26,7 @@ Client({}, function (err, sbot) {
         stuff.id = id
         getAvatar(sbot, id, id, function (err, profile) {
             if (err) throw err
-            console.log('stuff', profile)
+            console.log('profile', profile)
             state.me.set(profile)
         })
     })
