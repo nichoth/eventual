@@ -23,14 +23,13 @@ class EditableField extends Component {
 
     save (ev) {
         ev.preventDefault()
-        console.log('save', ev)
-        this.props.onSave(ev)
+        this.props.onSave(ev.target.name.value)
     }
 
     render (props, state) {
         if (state.isEditing) {
             return <form onSubmit={this.save}>
-                <input value={props.name} />
+                <input value={props.name} name="name" />
                 <button type="submit">save</button>
                 <button onClick={this.noEdit}>cancel</button>
             </form>
