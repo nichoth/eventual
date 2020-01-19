@@ -20,7 +20,7 @@ function View (props) {
 
     return <div>
         <div className="menu">
-            {field} <a href="/new">+</a>
+            {field} <a className="new-post" href="/new">+</a>
         </div>
 
         <hr />

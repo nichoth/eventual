@@ -4,6 +4,7 @@ var subscribe = require('./subscribe')
 var State = require('./state')
 var View = require('./view')
 var evs = require('./EVENTS')
+var App = require('./app.js')
 var S = require('pull-stream')
 var getAvatar = require('ssb-avatar')
 
@@ -11,12 +12,14 @@ var state = State()
 var { view } = ok(state, View, document.getElementById('content'))
 var stuff = {}
 
-// how to set your name?
 Client({}, function (err, sbot) {
     if (err) {
         throw err
     }
     console.log('sbot', sbot)
+    subscribe({ state, view, sbot })
+
+    var app = App(sbot)
 
     sbot.whoami(function (err, { id }) {
         if (err) throw err
@@ -27,22 +30,6 @@ Client({}, function (err, sbot) {
             state.me.set(profile)
         })
     })
-
-    function setName ({ id, name }, cb) {
-        sbot.publish({
-            type: 'about',
-            about: id,
-            name: name
-        }, cb)
-    }
-
-    function setAvatar ({ id, fileId }, cb) {
-        sbot.publish({
-            type: 'about',
-            about: id,
-            image: fileId
-        }, cb)
-    }
 
     S(
         sbot.createFeedStream(),
@@ -63,10 +50,8 @@ Client({}, function (err, sbot) {
     // sbot.whoami(function (err, who) {
     //     console.log('who', err, who)
     // })
-    subscribe({ state, view, sbot })
 })
 
 if (process.env.NODE_ENV === 'development') {
     window.app = { state, view, EVENTS: evs }
 }
-
