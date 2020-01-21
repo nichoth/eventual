@@ -5,8 +5,7 @@ var State = require('./state')
 var View = require('./view')
 var evs = require('./EVENTS')
 var App = require('./app.js')
-var S = require('pull-stream')
-var getAvatar = require('ssb-avatar')
+// var S = require('pull-stream')
 
 var state = State()
 var { view } = ok(state, View, document.getElementById('content'))
@@ -16,20 +15,13 @@ Client({}, function (err, sbot) {
     if (err) {
         throw err
     }
-    console.log('sbot', sbot)
     subscribe({ state, view, sbot })
 
     var app = App(sbot)
 
-    sbot.whoami(function (err, { id }) {
+    app.getProfile(function (err, profile) {
         if (err) throw err
-        stuff.id = id
-        getAvatar(sbot, id, id, function (err, profile) {
-            if (err) throw err
-            console.log('profile', profile)
-            state.me.set(profile)
-            console.log('state', state())
-        })
+        state.me.set(profile)
     })
 
     // S(
