@@ -20,10 +20,8 @@ function App (sbot) {
     function getProfile (cb) {
         sbot.whoami(function (err, { id }) {
             if (err) throw err
-            stuff.id = id
             getAvatar(sbot, id, id, function (err, profile) {
                 console.log('profile', profile)
-                console.log('state', state())
                 cb(err, profile)
             })
         })
