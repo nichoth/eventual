@@ -17,13 +17,14 @@ class EditableField extends Component {
     }
 
     noEdit (ev) {
-        ev.preventDefault()
+        if (ev && ev.preventDefault) ev.preventDefault()
         this.setState({ isEditing: false })
     }
 
     save (ev) {
         ev.preventDefault()
         this.props.onSave(ev.target.name.value)
+        this.setState({ isEditing: false })
     }
 
     render (props, state) {
