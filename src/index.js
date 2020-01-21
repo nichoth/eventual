@@ -28,16 +28,17 @@ Client({}, function (err, sbot) {
             if (err) throw err
             console.log('profile', profile)
             state.me.set(profile)
+            console.log('state', state())
         })
     })
 
-    S(
-        sbot.createFeedStream(),
-        S.through(console.log.bind(console, 'post')),
-        S.onEnd(function (err) {
-            console.log('done', err)
-        })
-    )
+    // S(
+    //     sbot.createFeedStream(),
+    //     S.through(console.log.bind(console, 'post')),
+    //     S.onEnd(function (err) {
+    //         console.log('done', err)
+    //     })
+    // )
 
     // var msg = {
     //     type: 'post',
