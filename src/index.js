@@ -9,7 +9,6 @@ var App = require('./app.js')
 
 var state = State()
 var { view } = ok(state, View, document.getElementById('content'))
-var stuff = {}
 
 Client({}, function (err, sbot) {
     if (err) {

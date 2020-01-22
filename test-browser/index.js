@@ -1,9 +1,9 @@
 var test = require('tape')
-var App = require('../src')
+var App = require('../src/client')
 
 var _sbot
 test('doesnt explode', function (t) {
-    App(function (err, sbot) {
+    App({}, function (err, sbot) {
         t.error(err)
         t.ok(sbot)
         _sbot = sbot

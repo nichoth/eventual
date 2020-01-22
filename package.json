@@ -16,7 +16,7 @@
     "sass-watch": "node-sass --watch src/style/main.scss --source-map-embed public/style.css",
     "lint": "eslint . --config .eslintrc",
     "test": "tape test/{**/*,*}.js | tap-spec",
-    "test-browser": "concurrently --kill-others \"node src/server/index.js\" \"browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec\""
+    "test-browser": "concurrently --kill-others \"NODE_ENV=\"test\" node src/server/index.js\" \"browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec\""
   },
   "dependencies": {
     "@nichoth/ok": "^2.0.0",
