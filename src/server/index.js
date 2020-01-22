@@ -33,8 +33,12 @@ function startSSB () {
     // } = process.env
 
     // use dev database
-    var appName = (process.env.NODE_ENV === 'development' ?
-        'ssb-ev-DEV' : 'ssb-ev')
+    var appName = 'ssb-ev'
+    if (process.env.NODE_ENV === 'development') {
+        appName = 'ssb-ev-DEV'
+    } else if (process.env.NODE_ENV === 'test') {
+        appName = 'ssb-ev-TEST' + Math.random()
+    }
 
     var opts = {}
     opts.caps = caps
