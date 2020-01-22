@@ -18,7 +18,7 @@ function start (cb) {
         subscribe({ state, view, sbot })
 
         if (cb) {
-            cb(null, { app, sbot, state, view })
+            cb(null, { sbot, state, view })
         }
     })
 
