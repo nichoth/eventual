@@ -4,6 +4,8 @@ var url = require('url')
 var ws = require('pull-ws/server')
 var muxrpc = require('muxrpc')
 var S = require('pull-stream')
+var rimraf = require('rimraf')
+var home = require('user-home')
 var caps = require('../caps.json')
 // var config = require('ssb-config')
 var WS_PORT = 8000
@@ -38,6 +40,12 @@ function startSSB () {
         appName = 'ssb-ev-DEV'
     } else if (process.env.NODE_ENV === 'test') {
         appName = 'ssb-ev-TEST-' + Math.random()
+    }
+
+    if (process.env.NODE_ENV === 'test') {
+        process.on('exit', function () {
+            rimraf.sync(home + '/.' + appName)
+        })
     }
 
     var opts = {}

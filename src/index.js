@@ -1,7 +1,7 @@
 var Start = require('./start')
 var App = require('./app.js')
 
-Start(function (err, { sbot, state, view }) {
+Start(function (err, { sbot, state }) {
     if (err) throw err
 
     var app = App(sbot)
