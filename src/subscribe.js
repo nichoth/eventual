@@ -14,7 +14,6 @@ function subscribe({ state, view, sbot }) {
             state.me.set(xtend(state.me(), {
                 name: msg.value.content.name
             }))
-            console.log('new profile', err, msg, state())
         })
     })
 }

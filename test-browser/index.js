@@ -1,14 +1,27 @@
 var test = require('tape')
-var App = require('../src/start')
+var start = require('../src/start')
+var evs = require('../src/EVENTS')
 
 var _sbot
+var _view
+var _state
 test('doesnt explode', function (t) {
-    App(function (err, { sbot }) {
+    start(function (err, { view, state, sbot }) {
         t.error(err)
         t.ok(sbot)
         _sbot = sbot
+        _view = view
+        _state = state
         t.end()
     })
+})
+
+test('set profile', function (t) {
+    t.plan(1)
+    _state.me(function onChange (val) {
+        t.equal(val.name, 'blob', 'sets name in state')
+    })
+    _view.emit(evs.profile.save, 'blob')
 })
 
 test('all done', function (t) {
