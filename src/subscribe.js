@@ -16,6 +16,10 @@ function subscribe({ state, view, sbot }) {
             }))
         })
     })
+
+    view.on(evs.profile.setAvatar, function () {
+        console.log('setAvatar', arguments)
+    })
 }
 
 module.exports = subscribe
