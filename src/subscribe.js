@@ -1,5 +1,6 @@
 var evs = require('./EVENTS')
 var xtend = require('xtend')
+// var S = require('pull-stream')
 
 function subscribe({ state, view, sbot }) {
     view.on(evs.hello.world, () => state.foo.set('bar'))
@@ -17,9 +18,10 @@ function subscribe({ state, view, sbot }) {
         })
     })
 
-    view.on(evs.profile.setAvatar, function () {
-        console.log('setAvatar', arguments)
-    })
+    view.on(evs.profile.setAvatar, function (ev) {
+        console.log('setAvatar', ev.target.files)
+        console.log('setAvatar', ev.target.value)
+   })
 }
 
 module.exports = subscribe

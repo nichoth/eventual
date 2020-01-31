@@ -70,6 +70,9 @@ function startSSB () {
         .use(require('ssb-gossip'))
         .use(require('ssb-replicate'))
         .use(require('ssb-backlinks'))
+        .use(require('ssb-blobs'))
+        .use(require('ssb-serve-blobs'))
+
         // .use(require('scuttlebot/plugins/plugins'))
         // .use(require('scuttlebot/plugins/master'))
         // .use(require('scuttlebot/plugins/gossip'))
