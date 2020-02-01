@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@nichoth/ok": "^2.0.0",
+    "filereader-pull-stream": "^1.0.0",
     "muxrpc": "^6.4.8",
     "observ": "^0.2.0",
     "observ-struct": "^6.0.0",
@@ -30,6 +31,7 @@
     "ruta3": "^2.0.1",
     "ssb-avatar": "^0.2.0",
     "ssb-backlinks": "^0.7.3",
+    "ssb-blob-files": "^1.2.0",
     "ssb-blobs": "^1.2.2",
     "ssb-client": "^4.7.9",
     "ssb-config": "^3.4.3",
@@ -61,6 +63,7 @@
     "eslint": "^6.6.0",
     "eslint-config-minlint": "^2.0.0",
     "eslint-plugin-react": "^7.16.0",
+    "filereader-stream": "^2.0.0",
     "husky": "^3.1.0",
     "inline-htmlify": "^2.0.1",
     "node-sass": "^4.13.0",
