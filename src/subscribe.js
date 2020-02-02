@@ -34,12 +34,12 @@ function subscribe({ state, view, sbot }) {
         saveAvatar (ev.target.files[0], function (err, res) {
             var { blob } = res
             console.log('saved', err, res)
-            var imageUrl = URL.createObjectURL( blob );
-            state.avatarUrl.set(imageUrl)
+            var imageUrl = URL.createObjectURL(blob);
+            state.me.set(xtend(state.me(), {
+                image: imageUrl
+            })),
+            console.log('state', state())
         })
-
-        // sbot.publish({type: 'about', about: yourId, image: fileId}, cb)
-        // state.avatarUrl.set(imageUrl)
     })
 
     function saveAvatar (file, cb) {

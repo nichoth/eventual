@@ -5,8 +5,7 @@ function State () {
     var state = struct({
         foo: observ('world'),
         route: struct({}),  // required
-        me: observ({}),
-        avatarUrl: observ(null)
+        me: observ({})
     })
     return state
 }

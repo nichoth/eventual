@@ -18,8 +18,8 @@ function View (props) {
             onSave={emit(evs.profile.save)} />) :
         ''
 
-    var image = props.avatarUrl ? 
-        <img className={'avatar'} src={ props.avatarUrl } /> :
+    var image = props.me.image ? 
+        <img className={'avatar'} src={ props.me.image } /> :
         null
 
     // me.image is avatar
