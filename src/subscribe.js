@@ -3,6 +3,8 @@ var xtend = require('xtend')
 var S = require('pull-stream')
 // var blobFiles = require('ssb-blob-files')
 var fileReaderStream = require('filereader-pull-stream')
+// var toPull = require('stream-to-pull-stream')
+var createHash = require('multiblob/util').createHash
 
 function subscribe({ state, view, sbot }) {
     view.on(evs.hello.world, () => state.foo.set('bar'))
@@ -21,13 +23,6 @@ function subscribe({ state, view, sbot }) {
     })
 
     view.on(evs.profile.setAvatar, function (ev) {
-        var reader = new FileReader()
-        reader.onload = function (ev) {
-            console.log('ev', ev)
-            // console.log('.result', ev.target.result)
-        }
-        reader.readAsDataURL(ev.target.files[0])
-
         // take reader.result and turn it into a pull stream
         // see ssb-blob-files for an example
         // then pipe it to sbot.blobs.add
@@ -35,17 +30,36 @@ function subscribe({ state, view, sbot }) {
 
         console.log('setAvatar', ev.target.files)
         console.log('setAvatar', ev.target.value)
+
+        saveAvatar (ev.target.files[0], function (err, res) {
+            var { blob } = res
+            console.log('saved', err, res)
+            var imageUrl = URL.createObjectURL( blob );
+            state.avatarUrl.set(imageUrl)
+        })
+
+        // sbot.publish({type: 'about', about: yourId, image: fileId}, cb)
+        // state.avatarUrl.set(imageUrl)
+    })
+
+    function saveAvatar (file, cb) {
+        var hasher = createHash('sha256')
+
         S(
-            fileReaderStream(ev.target.files[0]),
+            fileReaderStream(file),
+            hasher,
             sbot.blobs.add(function (err, hash) {
-                console.log('please work', err, hash)
+                if (err) return cb(err)
+                S(
+                    sbot.blobs.get('&' + hasher.digest),
+                    S.collect(function (err, vals) {
+                        var blob = new Blob(vals);
+                        cb(null, { hash: hasher.digest, blob })
+                    })
+                )
             })
         )
-
-        // blobFiles(ev.target.files, sbot, function (err, res) {
-        //     console.log('here', err, res)
-        // })
-    })
+    }
 }
 
 module.exports = subscribe

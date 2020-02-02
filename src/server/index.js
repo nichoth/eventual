@@ -66,12 +66,14 @@ function startSSB () {
     config.logging.level = 'notice'
 
     var _sbot = sbot
+        .use(require('ssb-plugins'))
         .use(require('ssb-master'))
         .use(require('ssb-gossip'))
         .use(require('ssb-replicate'))
         .use(require('ssb-backlinks'))
         .use(require('ssb-blobs'))
         .use(require('ssb-serve-blobs'))
+        .call(null, config)
 
         // .use(require('scuttlebot/plugins/plugins'))
         // .use(require('scuttlebot/plugins/master'))
@@ -87,7 +89,6 @@ function startSSB () {
         // .use(require('ssb-query'))
         // .use(require('scuttlebot/plugins/invite'))
         // .use(require('scuttlebot/plugins/local'))
-        .call(null, config)
 
     var server = http.createServer(function onRequest (req, res) {
         console.log('got request')

@@ -22,8 +22,6 @@ function connectSbot ({ onClose } = {}, cb) {
         })
         S(wsStream, rpcStream, wsStream)
 
-        // console.log('sbot', sbot)
-
         cb(null, sbot)
     }
 }

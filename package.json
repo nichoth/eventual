@@ -21,6 +21,7 @@
   "dependencies": {
     "@nichoth/ok": "^2.0.0",
     "filereader-pull-stream": "^1.0.0",
+    "multiblob": "^1.13.7",
     "muxrpc": "^6.4.8",
     "observ": "^0.2.0",
     "observ-struct": "^6.0.0",
@@ -38,6 +39,7 @@
     "ssb-gossip": "^1.1.1",
     "ssb-keys": "^7.2.0",
     "ssb-master": "^1.0.3",
+    "ssb-plugins": "^1.0.4",
     "ssb-replicate": "^1.3.2",
     "ssb-serve-blobs": "^2.1.0",
     "ssb-server": "^15.2.0",

@@ -18,13 +18,17 @@ function View (props) {
             onSave={emit(evs.profile.save)} />) :
         ''
 
+    var image = props.avatarUrl ? 
+        <img className={'avatar'} src={ props.avatarUrl } /> :
+        null
+
     // me.image is avatar
     return <div>
         <div className="menu">
             <input type="file" accept="image/*"
                 onChange={emit(evs.profile.setAvatar)}
             />
-            <img className={props.me.image ? 'avatar' : 'no-avatar'} />
+            {image}
             {field}
             <a className="new-post" href="/new">+</a>
         </div>
