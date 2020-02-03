@@ -10,6 +10,7 @@ function App (sbot) {
     }
 
     function setAvatar ({ id, fileId }, cb) {
+        console.log('set avatar', arguments)
         sbot.publish({
             type: 'about',
             about: id,
@@ -18,8 +19,19 @@ function App (sbot) {
     }
 
     function getProfile (cb) {
-        sbot.whoami(function (err, { id }) {
+        sbot.whoami(function (err, res) {
             if (err) throw err
+            var { id } = res
+            console.log('who', res)
+
+            // sbot.links({
+            //     source: dest,
+            //     dest: dest,
+            //     rel: 'about',
+            //     values: true,
+            //     reverse: true
+            // })
+
             getAvatar(sbot, id, id, function (err, profile) {
                 console.log('profile', profile)
                 cb(err, profile)

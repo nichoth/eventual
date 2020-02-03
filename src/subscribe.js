@@ -23,20 +23,16 @@ function subscribe({ state, view, sbot }) {
     })
 
     view.on(evs.profile.setAvatar, function (ev) {
-        // take reader.result and turn it into a pull stream
-        // see ssb-blob-files for an example
-        // then pipe it to sbot.blobs.add
-        // check that you get back a hash (file id) from that method call
-
         console.log('setAvatar', ev.target.files)
         console.log('setAvatar', ev.target.value)
 
-        saveAvatar (ev.target.files[0], function (err, res) {
-            var { blob } = res
+        saveAvatar(ev.target.files[0], function (err, res) {
+            var { blob, hash } = res
             console.log('saved', err, res)
             var imageUrl = URL.createObjectURL(blob);
+            state.avatarUrl.set(imageUrl)
             state.me.set(xtend(state.me(), {
-                image: imageUrl
+                image: hash
             })),
             console.log('state', state())
         })
@@ -53,8 +49,28 @@ function subscribe({ state, view, sbot }) {
                 S(
                     sbot.blobs.get('&' + hasher.digest),
                     S.collect(function (err, vals) {
+                        if (err) return cb(err)
                         var blob = new Blob(vals);
-                        cb(null, { hash: hasher.digest, blob })
+                        console.log('me.id', state.me().id)
+                        console.log('hash', hasher.digest)
+                        sbot.publish({
+                            type: 'about',
+                            about: state.me().id,
+                            image: {
+                                link: '&' + hasher.digest
+                                // width: widthInPx,   // optional, but recommended
+                                // height: heightInPx, // optional, but recommended
+                                // name: fileName,     // optional, but recommended
+                                // size: sizeInBytes,  // optional, but recommended
+                                // type: mimeType      // optional, but recommended
+                            }
+                        }, function (err, res) {
+                            if (err) return cb(err)
+                            console.log('res', res)
+                            var opts = { res: res, hash: '&' + hasher.digest,
+                                blob } 
+                            cb(null, opts)
+                        })
                     })
                 )
             })
