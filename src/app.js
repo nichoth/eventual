@@ -1,4 +1,5 @@
 var getAvatar = require('ssb-avatar')
+var S = require('pull-stream')
 
 function App (sbot) {
     function setName ({ id, name }, cb) {
@@ -22,7 +23,6 @@ function App (sbot) {
         sbot.whoami(function (err, res) {
             if (err) throw err
             var { id } = res
-            console.log('who', res)
 
             getAvatar(sbot, id, id, function (err, profile) {
                 console.log('profile', profile)
@@ -31,10 +31,23 @@ function App (sbot) {
         })
     }
 
+    function getUrlForHash (hash, cb) {
+        S(
+            sbot.blobs.get(hash),
+            S.collect(function (err, values) {
+                if (err) return cb(err)
+                var blob = new Blob(values);
+                var imageUrl = URL.createObjectURL(blob);
+                cb(null, imageUrl)
+            })
+        )
+    }
+
     return {
         getProfile,
         setName,
-        setAvatar
+        setAvatar,
+        getUrlForHash
     }
 }
 
