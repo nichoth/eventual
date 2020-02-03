@@ -38,6 +38,7 @@ function subscribe({ state, view, sbot }) {
         })
     })
 
+    // should create the blob/url from the file object
     function saveAvatar (file, cb) {
         var hasher = createHash('sha256')
 
@@ -46,33 +47,31 @@ function subscribe({ state, view, sbot }) {
             hasher,
             sbot.blobs.add(function (err, hash) {
                 if (err) return cb(err)
-                S(
-                    sbot.blobs.get('&' + hasher.digest),
-                    S.collect(function (err, vals) {
-                        if (err) return cb(err)
-                        var blob = new Blob(vals);
-                        console.log('me.id', state.me().id)
-                        console.log('hash', hasher.digest)
-                        sbot.publish({
-                            type: 'about',
-                            about: state.me().id,
-                            image: {
-                                link: '&' + hasher.digest
-                                // width: widthInPx,   // optional, but recommended
-                                // height: heightInPx, // optional, but recommended
-                                // name: fileName,     // optional, but recommended
-                                // size: sizeInBytes,  // optional, but recommended
-                                // type: mimeType      // optional, but recommended
-                            }
-                        }, function (err, res) {
-                            if (err) return cb(err)
-                            console.log('res', res)
-                            var opts = { res: res, hash: '&' + hasher.digest,
-                                blob } 
-                            cb(null, opts)
-                        })
-                    })
-                )
+                sbot.publish({
+                    type: 'about',
+                    about: state.me().id,
+                    image: {
+                        link: '&' + hasher.digest
+                        // width: widthInPx,   // optional, but recommended
+                        // height: heightInPx, // optional, but recommended
+                        // name: fileName,     // optional, but recommended
+                        // size: sizeInBytes,  // optional, but recommended
+                        // type: mimeType      // optional, but recommended
+                    }
+                }, function (err, res) {
+                    if (err) return cb(err)
+                    var opts = { res: res, hash: '&' + hasher.digest,
+                        blob: file } 
+                    cb(null, opts)
+                })
+
+                // S(
+                //     sbot.blobs.get('&' + hasher.digest),
+                //     S.collect(function (err, vals) {
+                //         if (err) return cb(err)
+                //         var blob = new Blob(vals);
+                //     })
+                // )
             })
         )
     }

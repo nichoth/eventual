@@ -24,14 +24,6 @@ function App (sbot) {
             var { id } = res
             console.log('who', res)
 
-            // sbot.links({
-            //     source: dest,
-            //     dest: dest,
-            //     rel: 'about',
-            //     values: true,
-            //     reverse: true
-            // })
-
             getAvatar(sbot, id, id, function (err, profile) {
                 console.log('profile', profile)
                 cb(err, profile)
