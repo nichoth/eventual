@@ -23,22 +23,19 @@ function subscribe({ state, view, sbot }) {
     })
 
     view.on(evs.profile.setAvatar, function (ev) {
-        console.log('setAvatar', ev.target.files)
-        console.log('setAvatar', ev.target.value)
+        // console.log('setAvatar', ev.target.files)
+        // console.log('setAvatar', ev.target.value)
 
         saveAvatar(ev.target.files[0], function (err, res) {
             var { blob, hash } = res
-            console.log('saved', err, res)
             var imageUrl = URL.createObjectURL(blob);
-            state.avatarUrl.set(imageUrl)
             state.me.set(xtend(state.me(), {
                 image: hash
-            })),
-            console.log('state', state())
+            }))
+            state.avatarUrl.set(imageUrl)
         })
     })
 
-    // should create the blob/url from the file object
     function saveAvatar (file, cb) {
         var hasher = createHash('sha256')
 
@@ -64,14 +61,6 @@ function subscribe({ state, view, sbot }) {
                         blob: file } 
                     cb(null, opts)
                 })
-
-                // S(
-                //     sbot.blobs.get('&' + hasher.digest),
-                //     S.collect(function (err, vals) {
-                //         if (err) return cb(err)
-                //         var blob = new Blob(vals);
-                //     })
-                // )
             })
         )
     }

@@ -21,10 +21,9 @@ function View (props) {
     var image = props.avatarUrl ? 
         <div className="avatar-box">
             <img className={'avatar'} src={ props.avatarUrl } />
-        </div>:
+        </div> :
         null
 
-    // me.image is avatar
     return <div>
         <div className="menu">
             <span>Avatar: </span>

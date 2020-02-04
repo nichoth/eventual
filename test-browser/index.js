@@ -18,10 +18,27 @@ test('doesnt explode', function (t) {
 
 test('set profile', function (t) {
     t.plan(1)
-    _state.me(function onChange (val) {
-        t.equal(val.name, 'blob', 'sets name in state')
-    })
+    var rm = _state.me(onChange)
+    function onChange (val) {
+        t.equal(val.name, 'blob', 'sets username in state')
+        rm()
+    }
     _view.emit(evs.profile.save, 'blob')
+})
+
+test('set avatar', function (t) {
+    t.plan(1)
+    var file = new File(['foo bar'], 'foo.txt')
+    var rm = _state(function onChange() {
+        t.ok(_state().me.image)
+        rm()
+    })
+
+    _view.emit(evs.profile.setAvatar, {
+        target: {
+            files: [file]
+        }
+    })
 })
 
 test('all done', function (t) {

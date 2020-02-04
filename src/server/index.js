@@ -6,24 +6,12 @@ var muxrpc = require('muxrpc')
 var S = require('pull-stream')
 var rimraf = require('rimraf')
 var home = require('user-home')
-var caps = require('../caps.json')
-// var config = require('ssb-config')
-var WS_PORT = 8000
-var manifest = require('../manifest.json')
-
-// // add plugins
-// Server
-//   .use(require('ssb-master'))
-//   .use(require('ssb-gossip'))
-//   .use(require('ssb-replicate'))
-//   .use(require('ssb-backlinks'))
-
-// var server = Server(config)
-
+var path = require('path')
 var ssbKeys = require('ssb-keys')
 var ssbConfigInject = require('ssb-config/inject')
-var path = require('path')
-// var sbot = require('scuttlebot')
+var caps = require('../caps.json')
+var manifest = require('../manifest.json')
+var WS_PORT = 8000
 
 // @TODO check if global sbot is running and use that if possible
 function startSSB () {
@@ -44,7 +32,7 @@ function startSSB () {
 
     if (process.env.NODE_ENV === 'test') {
         process.on('exit', function () {
-            rimraf.sync(home + '/.' + appName)
+            rimraf.sync(path.join(home, '.' + appName))
         })
     }
 
@@ -58,7 +46,6 @@ function startSSB () {
     // }
 
     var config = ssbConfigInject(appName, opts)
-    // console.log('config', config)
 
     var keyPath = path.join(config.path, 'secret')
     config.keys = ssbKeys.loadOrCreateSync(keyPath)
