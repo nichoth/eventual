@@ -32,6 +32,7 @@ function View (props) {
                 onChange={emit(evs.profile.setAvatar)}
             />
             {image}
+            {' '}
             {field}
             <a className="new-post" href="/new">+</a>
         </div>
