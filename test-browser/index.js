@@ -30,7 +30,7 @@ test('set avatar', function (t) {
     t.plan(1)
     var file = new File(['foo bar'], 'foo.txt')
     var rm = _state(function onChange() {
-        t.ok(_state().me.image)
+        t.ok(_state().me.image, 'has a file hash')
         rm()
     })
 
