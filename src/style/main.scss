@@ -4,6 +4,16 @@ button {
     }
 }
 
+.avatar-box {
+    width: 2em;
+    height: 2em;
+    display: inline-block;
+    img.avatar {
+        max-height: 100%;
+        max-width: 100%;
+    }
+}
+
 a.new-post {
     display: block;
     float: right;

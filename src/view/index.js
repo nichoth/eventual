@@ -19,12 +19,15 @@ function View (props) {
         ''
 
     var image = props.avatarUrl ? 
-        <img className={'avatar'} src={ props.avatarUrl } /> :
+        <div className="avatar-box">
+            <img className={'avatar'} src={ props.avatarUrl } />
+        </div>:
         null
 
     // me.image is avatar
     return <div>
         <div className="menu">
+            <span>Avatar: </span>
             <input type="file" accept="image/*"
                 onChange={emit(evs.profile.setAvatar)}
             />
