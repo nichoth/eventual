@@ -6,6 +6,11 @@ function Home (props) {
     console.log('props', props)
     return <div className="posts">
         posts
+        <ul className="post-list">
+            {props.posts.map(function (post) {
+                return <li className="post">{post.value.content.text}</li>
+            })}
+        </ul>
     </div>
 }
 
