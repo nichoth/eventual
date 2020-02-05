@@ -21,4 +21,10 @@ Start(function (err, { sbot, state }) {
             console.log('state', state())
         })
     })
+
+    app.getPosts(function (err, res) {
+        if (err) throw err
+        state.posts.set(res)
+        console.log('getPosts state', state())
+    })
 })

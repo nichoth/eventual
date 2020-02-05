@@ -43,7 +43,21 @@ function App (sbot) {
         )
     }
 
+    function getPosts (cb) {
+        S(
+            sbot.createLogStream({
+                reverse: true,
+                limit: 20
+            }),
+            S.collect(function (err, msgs) {
+                if (err) return cb(err)
+                cb(null, msgs)
+            })
+        )
+    }
+
     return {
+        getPosts,
         getProfile,
         setName,
         setAvatar,

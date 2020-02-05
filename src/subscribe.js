@@ -24,6 +24,7 @@ function subscribe({ state, view, sbot }) {
 
     view.on(evs.profile.setAvatar, function (ev) {
         var file = ev.target.files[0]
+        console.log('file', file)
         saveAvatar(file, function (err, { hash }) {
             if (err) throw err
             // var { /*blob,*/ hash } = res
