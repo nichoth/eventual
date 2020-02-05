@@ -37,8 +37,8 @@ function View (props) {
         </div>
 
         <hr />
-        <RouteView {...props} />
         <button onClick={emit(evs.hello.world)}>emit event</button>
+        <RouteView {...props} />
     </div>
 }
 

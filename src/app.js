@@ -45,7 +45,8 @@ function App (sbot) {
 
     function getPosts (cb) {
         S(
-            sbot.createLogStream({
+            sbot.messagesByType({
+                type: 'post',
                 reverse: true,
                 limit: 20
             }),

@@ -1,7 +1,12 @@
 var { h } = require('preact')
 
 function Home (props) {
-    return <div>home</div>
+    if (!props.posts) return <div>home</div>
+
+    console.log('props', props)
+    return <div className="posts">
+        posts
+    </div>
 }
 
 module.exports = Home
