@@ -65,36 +65,37 @@ function subscribe({ state, view, sbot }) {
         )
     }
 
+    function newPost (file, cb) {
+        var hasher = createHash('sha256')
+
+        S(
+            fileReaderStream(file),
+            hasher,
+            sbot.blobs.add(function (err, _hash) {
+                if (err) throw err
+                console.log('added blob', err, hasher.digest, _hash)
+                var hash = '&' + hasher.digest
+                
+                sbot.publish({
+                    type: 'post',
+                    text: 'checkout [this file!]('+hash+')',
+                    mentions: [{
+                      link: hash,        // the hash given by blobs.add
+                    //   name: 'hello.txt', // optional, but recommended
+                    //   size: 12,          // optional, but recommended
+                    //   type: 'text/plain' // optional, but recommended
+                    }]
+                }, cb)
+            })
+        )
+    }
+
     view.on(evs.post.new, function (ev) {
         console.log('new', ev)
-        // first add to the blob store
-        // pull(
-        //     toPull.source(fs.createReadStream('./hello.txt')),
-        //     sbot.blobs.add(function (err, hash) {
-        //       // 'hash' is the hash-id of the blob
-        //     })
-        //   )
-
-        // then reference the hash in a post type message
-        // sbot.publish({
-        //     type: 'post',
-        //     text: 'Hello, world!'
-        // }, function (err, msg) {
-        //     console.log('done writing', err, msg)
-        // })
-
-        // sbot.publish({
-        //     type: 'post',
-        //     text: 'checkout [this file!]('+hash+')',
-        //     mentions: [{
-        //       link: hash,        // the hash given by blobs.add
-        //       name: 'hello.txt', // optional, but recommended
-        //       size: 12,          // optional, but recommended
-        //       type: 'text/plain' // optional, but recommended
-        //     }]
-        //   }, function (err, msg) {
-        //     // ...
-        //   })
+        var file = ev.target.files[0]
+        newPost(file, function (err, res) {
+            console.log('published msg', err, res)
+        })
     })
 }
 

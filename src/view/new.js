@@ -2,9 +2,13 @@ var { h } = require('preact')
 var evs = require('../EVENTS')
 
 function New (props) {
+    var { emit } = props
+
     return <div>
-        create new stuff
-        <button onClick={props.emit(evs.post.new)}>new</button>
+        <span>create new stuff</span>
+        <input type="file" accept="image/*"
+            onChange={emit(evs.post.new)}
+        />
     </div>
 }
 
