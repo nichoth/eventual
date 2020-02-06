@@ -1,5 +1,6 @@
 var getAvatar = require('ssb-avatar')
 var S = require('pull-stream')
+var after = require('after')
 
 function App (sbot) {
     function setName ({ id, name }, cb) {
@@ -43,6 +44,32 @@ function App (sbot) {
         )
     }
 
+    function getUrlsForPosts (posts, cb) {
+        console.log('posts in here', posts)
+        var _urls = {}
+        var next = after(posts.length, done)
+
+        function done (err, urls) {
+            if (err) return cb(err)
+            cb(null, urls)
+        }
+
+        posts.forEach(function (post) {
+            if (!post.value.content.mentions) {
+                return next(null, _urls)
+            }
+            var hash = post.value.content.mentions[0].link
+            if (!hash) {
+                return next(null, _urls)
+            }
+            getUrlForHash(hash, function (err, url) {
+                if (err) return next(err)
+                _urls[hash] = url
+                next(null, _urls)
+            })
+        })
+    }
+
     function getPosts (cb) {
         S(
             sbot.messagesByType({
@@ -62,7 +89,8 @@ function App (sbot) {
         getProfile,
         setName,
         setAvatar,
-        getUrlForHash
+        getUrlForHash,
+        getUrlsForPosts
     }
 }
 

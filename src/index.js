@@ -18,7 +18,6 @@ Start(function (err, { sbot, state }) {
         app.getUrlForHash(hash, function (err, url) {
             if (err) throw err
             state.avatarUrl.set(url)
-            console.log('state', state())
         })
     })
 
@@ -26,5 +25,9 @@ Start(function (err, { sbot, state }) {
         if (err) throw err
         state.posts.set(res)
         console.log('getPosts state', state())
+        app.getUrlsForPosts(res, function (err, urls) {
+            if (err) throw err
+            state.postUrls.set(urls)
+        })
     })
 })

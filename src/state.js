@@ -7,7 +7,8 @@ function State () {
         route: struct({}),  // required
         me: observ({}),
         avatarUrl: observ(null),
-        posts: observ(null)
+        posts: observ(null),
+        postUrls: observ(null)
     })
     return state
 }

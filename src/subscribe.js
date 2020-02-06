@@ -1,9 +1,7 @@
 var evs = require('./EVENTS')
 var xtend = require('xtend')
 var S = require('pull-stream')
-// var blobFiles = require('ssb-blob-files')
 var fileReaderStream = require('filereader-pull-stream')
-// var toPull = require('stream-to-pull-stream')
 var createHash = require('multiblob/util').createHash
 
 function subscribe({ state, view, sbot }) {

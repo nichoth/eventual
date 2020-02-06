@@ -1,4 +1,5 @@
 var { h } = require('preact')
+var App = require('../app')
 
 function Home (props) {
     if (!props.posts) return <div>home</div>
@@ -8,7 +9,13 @@ function Home (props) {
         posts
         <ul className="post-list">
             {props.posts.map(function (post) {
-                return <li className="post">{post.value.content.text}</li>
+                return <li className="post">
+                    {post.value.content.text}
+                    {post.value.content.mentions && props.postUrls ?
+                        <img src={props.postUrls[post.value.content.mentions[0].link]}
+                        /> :
+                        null}
+                </li>
             })}
         </ul>
     </div>
