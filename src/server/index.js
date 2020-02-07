@@ -63,7 +63,7 @@ function startSSB () {
         .use(require('ssb-replicate'))
         .use(require('ssb-backlinks'))
         .use(require('ssb-blobs'))
-        // .use(require('ssb-serve-blobs'))
+        .use(require('ssb-serve-blobs'))
         .call(null, config)
 
         // .use(require('ssb-friends'))
