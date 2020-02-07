@@ -9,11 +9,13 @@ function Home (props) {
         posts
         <ul className="post-list">
             {props.posts.map(function (post) {
+                if (!post.value.content.mentions) return null
+
+                var hash = post.value.content.mentions[0].link
                 return <li className="post">
                     {post.value.content.text}
                     {post.value.content.mentions && props.postUrls ?
-                        <img src={props.postUrls[post.value.content.mentions[0].link]}
-                        /> :
+                        <img src={props.postUrls[hash]} /> :
                         null}
                 </li>
             })}

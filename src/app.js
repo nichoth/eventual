@@ -45,7 +45,6 @@ function App (sbot) {
     }
 
     function getUrlsForPosts (posts, cb) {
-        console.log('posts in here', posts)
         var _urls = {}
         var next = after(posts.length, done)
 

@@ -11,7 +11,7 @@ var ssbKeys = require('ssb-keys')
 var ssbConfigInject = require('ssb-config/inject')
 var caps = require('../caps.json')
 var manifest = require('../manifest.json')
-var WS_PORT = 8000
+var WS_PORT = process.env.WS_PORT || 8000
 
 // @TODO check if global sbot is running and use that if possible
 function startSSB () {
@@ -28,6 +28,10 @@ function startSSB () {
         appName = 'ssb-ev-DEV'
     } else if (process.env.NODE_ENV === 'test') {
         appName = 'ssb-ev-TEST-' + Math.random()
+    }
+
+    if (process.env.APP_NAME) {
+        appName += ('-' + process.env.APP_NAME)
     }
 
     if (process.env.NODE_ENV === 'test') {
@@ -59,17 +63,10 @@ function startSSB () {
         .use(require('ssb-replicate'))
         .use(require('ssb-backlinks'))
         .use(require('ssb-blobs'))
-        .use(require('ssb-serve-blobs'))
+        // .use(require('ssb-serve-blobs'))
         .call(null, config)
 
-        // .use(require('scuttlebot/plugins/plugins'))
-        // .use(require('scuttlebot/plugins/master'))
-        // .use(require('scuttlebot/plugins/gossip'))
-        // .use(require('scuttlebot/plugins/replicate'))
         // .use(require('ssb-friends'))
-        // .use(require('ssb-blobs'))
-        // .use(require('ssb-serve-blobs'))
-        // .use(require('ssb-backlinks'))
         // .use(require('ssb-private'))
         // .use(require('ssb-about'))
         // .use(require('ssb-contacts'))
@@ -83,7 +80,7 @@ function startSSB () {
         console.log('req pathname', pathname)
     }).listen(WS_PORT, function (err) {
         if (err) throw err
-        console.log('listening on 8000')
+        console.log('listening on ' + WS_PORT)
     })
 
     ws({ server }, function onConnection (wsStream) {
@@ -111,4 +108,3 @@ process.on('SIGTERM', function () {
 })
 
 module.exports = startSSB
-

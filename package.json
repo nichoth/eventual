@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node-sass src/style/main.scss --source-map-embed > public/style.css && concurrently --kill-others \"env $(cat .env | xargs) node src/server/index.js\" \"npm run serve\" \"npm run sass-watch\"",
+    "instance": "concurrently --kill-others \"env $(cat .env | xargs) APP_NAME=\"instance2\" WS_PORT=\"8001\" node src/server/index.js\" \"npm run serve\"",
     "serve": "env $(cat .env | xargs) budo src/index.js:bundle.js --pushstate --dir=public --live -- -t babelify -g aliasify -t envify -dv",
     "build": "npm run build-js && npm run build-css",
     "build-js": "browserify -p bundle-collapser/plugin example/index.js -t babelify -t [ envify --NODE_ENV production ] -g aliasify -g unassertify | uglifyjs -mc > public/bundle.js",
