@@ -33,10 +33,12 @@ function View (props) {
             {image}
             {' '}
             {field}
+            <a className="peers-link" href="peers">peers</a>
             <a className="new-post" href="/new">+</a>
         </div>
 
         <hr />
+
         <button onClick={emit(evs.hello.world)}>emit event</button>
         <RouteView {...props} />
     </div>
