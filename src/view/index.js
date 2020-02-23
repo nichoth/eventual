@@ -26,14 +26,27 @@ function View (props) {
 
     return <div>
         <div className="menu">
-            <span>Avatar: </span>
-            <input type="file" accept="image/*"
-                onChange={emit(evs.profile.setAvatar)}
-            />
-            {image}
-            {' '}
-            {field}
-            <a className="peers-link" href="peers">peers</a>
+            <div className="menu-item">
+                <span>Avatar: </span>
+                <input type="file" accept="image/*"
+                    onChange={emit(evs.profile.setAvatar)}
+                />
+                {image}
+                {' '}
+            </div>
+
+            <div className="menu-item">
+                {field}
+            </div>
+
+            <div className="menu-item">
+                <a className="peers-link" href="peers">peers</a>
+            </div>
+
+            <div className="menu-item">
+                <a className="pubs" href="pubs">pubs</a>
+            </div>
+
             <a className="new-post" href="/new">+</a>
         </div>
 
