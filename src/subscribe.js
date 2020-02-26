@@ -7,6 +7,17 @@ var createHash = require('multiblob/util').createHash
 function subscribe({ state, view, sbot }) {
     view.on(evs.hello.world, () => state.foo.set('bar'))
 
+    view.on(evs.pubs.add, function (invite) {
+        console.log('here', invite, sbot.invite.accept)
+        // sbot.invite.accept(invite, function (err, res) {
+        //     console.log('pubs add', err, res)
+        // })
+        var inv = 'ssb-pub.picodevelopment.nl:8008:@UFDjYpDN89OTdow4sqZP5eEGGcy+1eN/HNc5DMdMI0M=.ed25519~ervFwmLaX2ZxF9GfeYnQcTT9IYSNXP3r8XfuGJcF1CE='
+        sbot.invite.accept(inv, function (err, res) {
+            console.log('pubs add', err, res)
+        })
+    })
+
     view.on(evs.profile.save, function (newName) {
         sbot.publish({
             type: 'about',
