@@ -8,7 +8,11 @@ function State () {
         me: observ({}),
         avatarUrl: observ(null),
         posts: observ(null),
-        postUrls: observ(null)
+        postUrls: observ(null),
+        pubs: struct({
+            list: observ([]),
+            err: observ(null)
+        })
     })
     return state
 }

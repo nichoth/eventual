@@ -8,13 +8,15 @@ function subscribe({ state, view, sbot }) {
     view.on(evs.hello.world, () => state.foo.set('bar'))
 
     view.on(evs.pubs.add, function (invite) {
-        console.log('here', invite, sbot.invite.accept)
-        // sbot.invite.accept(invite, function (err, res) {
-        //     console.log('pubs add', err, res)
-        // })
+        console.log('accept invite', invite)
         var inv = 'ssb-pub.picodevelopment.nl:8008:@UFDjYpDN89OTdow4sqZP5eEGGcy+1eN/HNc5DMdMI0M=.ed25519~ervFwmLaX2ZxF9GfeYnQcTT9IYSNXP3r8XfuGJcF1CE='
         sbot.invite.accept(inv, function (err, res) {
-            console.log('pubs add', err, res)
+            if (err) {
+                console.log('pubs add err', err)
+                return state.pubs.err.set(err)
+            }
+            console.log('pubs add', res)
+            state.pubs.list.set(res)
         })
     })
 
