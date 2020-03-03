@@ -7,6 +7,20 @@ Start(function (err, { sbot, state }) {
 
     var app = App(sbot)
 
+
+    console.log('fooo', sbot.friends)
+    // S(
+    //     sbot.friends.stream(),
+    //     S.collect(function (err, res) {
+    //         console.log('here', err, res)
+    //     })
+    // )
+
+    sbot.friends.stream(function (err, graph) {
+        console.log('friends stream', err, graph)
+    })
+
+
     app.getProfile(function (err, profile) {
         // need to get the avatar blob in here too from the hash/id
         // (returned in profile)

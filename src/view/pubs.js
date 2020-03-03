@@ -15,11 +15,12 @@ class Pubs extends Component {
     }
 
     render (props) {
-        console.log('props', props)
         var { pubs } = props
 
         return <div>
             Add a pub
+            <hr />
+            Invite code: 
             <form onSubmit={this.addPub}>
                 <input type="text" id="invite" name="invite" />
                 <button type="submit">save</button>
