@@ -9,7 +9,7 @@ function subscribe({ state, view, sbot }) {
 
     view.on(evs.pubs.add, function (invite) {
         console.log('accept invite', invite)
-        var inv = 'ssb-pub.picodevelopment.nl:8008:@UFDjYpDN89OTdow4sqZP5eEGGcy+1eN/HNc5DMdMI0M=.ed25519~ervFwmLaX2ZxF9GfeYnQcTT9IYSNXP3r8XfuGJcF1CE='
+        var inv = 'us-west.ssbpeer.net:8008:@MauI+NQ1dOg4Eo5NPs4OKxVQgWXMjlp5pjQ87CdRJtQ=.ed25519~F6cXW6IMaLPZXNNHTAq9UL70lc1w5qfFdQybHTWTwko='
         sbot.invite.accept(inv, function (err, res) {
             if (err) {
                 console.log('pubs add err', err)
