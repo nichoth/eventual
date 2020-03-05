@@ -20,6 +20,10 @@ Start(function (err, { sbot, state }) {
         console.log('friends stream', err, graph)
     })
 
+    sbot.gossip.peers(function (err, peers) {
+        console.log('peers', err, peers)
+    })
+
 
     app.getProfile(function (err, profile) {
         // need to get the avatar blob in here too from the hash/id
@@ -38,7 +42,7 @@ Start(function (err, { sbot, state }) {
     app.getPosts(function (err, res) {
         if (err) throw err
         state.posts.set(res)
-        console.log('getPosts state', state())
+        console.log('state', state())
         app.getUrlsForPosts(res, function (err, urls) {
             if (err) throw err
             state.postUrls.set(urls)
