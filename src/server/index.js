@@ -65,9 +65,9 @@ function startSSB () {
         .use(require('ssb-blobs'))
         .use(require('ssb-serve-blobs'))
         .use(require('ssb-invite'))
+        .use(require('ssb-friends'))
         .call(null, config)
 
-        // .use(require('ssb-friends'))
         // .use(require('ssb-private'))
         // .use(require('ssb-about'))
         // .use(require('ssb-contacts'))

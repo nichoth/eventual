@@ -16,6 +16,22 @@ Start(function (err, { sbot, state }) {
     //     })
     // )
 
+    // S(
+    //     sbot.friends.createFriendStream({
+    //         hops: 1
+    //     }, function (err, res) {
+    //         console.log('here', err, res)
+    //     }),
+    //     S.log()
+    // )
+
+    // S(
+    //     sbot.friends.createFriendStream({
+    //         hops: 1
+    //     }),
+    //     S.log()
+    // )
+
     sbot.friends.stream(function (err, graph) {
         console.log('friends stream', err, graph)
     })
@@ -23,6 +39,11 @@ Start(function (err, { sbot, state }) {
     sbot.gossip.peers(function (err, peers) {
         console.log('peers', err, peers)
     })
+
+    // S(
+    //     sbot.replicate.changes(),
+    //     S.log()
+    // )
 
 
     app.getProfile(function (err, profile) {

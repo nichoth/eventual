@@ -11,7 +11,9 @@ function Home (props) {
             {props.posts.map(function (post) {
                 if (!post.value.content.mentions) return null
 
-                var hash = post.value.content.mentions[0].link
+                var hash = post.value.content.mentions[0] ?
+                    post.value.content.mentions[0].link :
+                    null
                 return <li className="post">
                     {post.value.content.text}
                     {post.value.content.mentions && props.postUrls ?
