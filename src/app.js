@@ -64,10 +64,12 @@ function App (sbot) {
             }),
             S.filter(Boolean),
             S.asyncMap(function (hash, cb) {
-                getUrlForHash(hash, cb)
+                getUrlForHash(hash, function (err, url) {
+                    if (err) return cb(err)
+                    cb(null, [hash, url])
+                })
             })
         )
-        
     }
 
     function getUrlsForPosts (posts, cb) {

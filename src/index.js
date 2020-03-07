@@ -1,6 +1,7 @@
 var Start = require('./start')
 var App = require('./app.js')
 var S = require('pull-stream')
+var xtend = require('xtend')
 
 Start(function (err, { sbot, state }) {
     if (err) throw err
@@ -68,8 +69,11 @@ Start(function (err, { sbot, state }) {
         S(
             S.values(res),
             app.getUrlForPost(),
-            S.drain(function (data) {
-                console.log('data', data)
+            S.drain(function ([hash, url]) {
+                console.log('data', [hash, url])
+                var newState = {}
+                newState[hash] = url
+                state.postUrls.set(xtend(state.postUrls(), newState))
             }, function onEnd (err) {
                 console.log('end', err)
             })
