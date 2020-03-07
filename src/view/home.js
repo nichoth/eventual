@@ -14,14 +14,22 @@ function Home (props) {
                 var hash = post.value.content.mentions[0] ?
                     post.value.content.mentions[0].link :
                     null
-                return hash ?
-                    <li className="post">
-                        {post.value.content.text}
-                        {post.value.content.mentions && props.postUrls ?
-                            <img src={props.postUrls[hash]} /> :
-                            null}
-                    </li> :
-                    null
+
+                return <li className="post">
+                    {post.value.content.text}
+                    {post.value.content.mentions ?
+                        <img src={props.postUrls[hash]} /> :
+                        null}
+                </li>
+
+                // return hash ?
+                //     <li className="post">
+                //         {post.value.content.text}
+                //         {post.value.content.mentions ?
+                //             <img src={props.postUrls[hash]} /> :
+                //             null}
+                //     </li> :
+                //     null
             })}
         </ul>
     </div>

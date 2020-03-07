@@ -78,11 +78,5 @@ Start(function (err, { sbot, state }) {
                 console.log('end', err)
             })
         )
-
-        // app.getUrlsForPosts(res, function (err, urls) {
-        //     if (err) throw err
-        //     console.log('hereeeeeee', urls)
-        //     state.postUrls.set(urls)
-        // })
     })
 })

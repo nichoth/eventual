@@ -36,7 +36,7 @@ function App (sbot) {
     function getUrlForHash (hash, cb) {
         S(
             sbot.blobs.get(hash),
-            Catch(),
+            // Catch(),
             S.collect(function (err, values) {
                 if (err) {
                     console.log('err here', err)
