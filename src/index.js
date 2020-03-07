@@ -32,13 +32,13 @@ Start(function (err, { sbot, state }) {
     //     S.log()
     // )
 
-    sbot.friends.stream(function (err, graph) {
-        console.log('friends stream', err, graph)
-    })
+    // sbot.friends.stream(function (err, graph) {
+    //     console.log('friends stream', err, graph)
+    // })
 
-    sbot.gossip.peers(function (err, peers) {
-        console.log('peers', err, peers)
-    })
+    // sbot.gossip.peers(function (err, peers) {
+    //     console.log('peers', err, peers)
+    // })
 
     // S(
     //     sbot.replicate.changes(),
@@ -64,9 +64,21 @@ Start(function (err, { sbot, state }) {
         if (err) throw err
         state.posts.set(res)
         console.log('state', state())
-        app.getUrlsForPosts(res, function (err, urls) {
-            if (err) throw err
-            state.postUrls.set(urls)
-        })
+
+        S(
+            S.values(res),
+            app.getUrlForPost(),
+            S.drain(function (data) {
+                console.log('data', data)
+            }, function onEnd (err) {
+                console.log('end', err)
+            })
+        )
+
+        // app.getUrlsForPosts(res, function (err, urls) {
+        //     if (err) throw err
+        //     console.log('hereeeeeee', urls)
+        //     state.postUrls.set(urls)
+        // })
     })
 })

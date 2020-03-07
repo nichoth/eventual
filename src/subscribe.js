@@ -85,7 +85,7 @@ function subscribe({ state, view, sbot }) {
             hasher,
             sbot.blobs.add(function (err, _hash) {
                 if (err) throw err
-                console.log('added blob', err, hasher.digest, _hash)
+                // console.log('added blob', err, hasher.digest, _hash)
                 var hash = '&' + hasher.digest
                 
                 sbot.publish({

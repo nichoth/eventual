@@ -1,6 +1,7 @@
 var getAvatar = require('ssb-avatar')
 var S = require('pull-stream')
 var after = require('after')
+var Catch = require('pull-catch')
 
 function App (sbot) {
     function setName ({ id, name }, cb) {
@@ -35,8 +36,12 @@ function App (sbot) {
     function getUrlForHash (hash, cb) {
         S(
             sbot.blobs.get(hash),
+            Catch(),
             S.collect(function (err, values) {
-                if (err) return cb(err)
+                if (err) {
+                    console.log('err here', err)
+                    return cb(err)
+                }
                 var blob = new Blob(values);
                 var imageUrl = URL.createObjectURL(blob);
                 cb(null, imageUrl)
@@ -44,15 +49,37 @@ function App (sbot) {
         )
     }
 
+    function getUrlForPost () {
+        return S(
+            S.map(function onData (post) {
+                console.log('post', post)
+                if (!post.value.content.mentions) return null
+
+                var hash = post.value.content.mentions[0] ?
+                    post.value.content.mentions[0].link :
+                    null
+                if (!hash) return null
+                if (hash[0] != '&') return null
+                return hash
+            }),
+            S.filter(Boolean),
+            S.asyncMap(function (hash, cb) {
+                getUrlForHash(hash, cb)
+            })
+        )
+        
+    }
+
     function getUrlsForPosts (posts, cb) {
         var _urls = {}
         var next = after(posts.length, done)
-
         function done (err, urls) {
+            console.log('done', err, urls)
             if (err) return cb(err)
             cb(null, urls)
         }
 
+        var i = 0
         posts.forEach(function (post) {
             if (!post.value.content.mentions) {
                 return next(null, _urls)
@@ -61,18 +88,27 @@ function App (sbot) {
                 post.value.content.mentions[0].link :
                 null
 
-            if (!hash) return next(null, _urls)
+            // console.log('post')
 
+            // var hash = post.value.content.mentions[0].link
+
+            if (!hash) return next(null, _urls)
+            if (hash[0] != '&') return next(null, _urls)
+
+            i++
+            console.log('i', i, hash)
             getUrlForHash(hash, function (err, url) {
+                console.log('oooo', err, url)
+
                 if (err) return console.log('err', err)
                 _urls[hash] = url
                 next(null, _urls)
+                console.log('_urls', _urls)
             })
         })
     }
 
     function getPosts (cb) {
-        console.log('getposts')
         S(
             sbot.messagesByType({
                 // todo: changge post type
@@ -82,7 +118,6 @@ function App (sbot) {
             }),
             S.collect(function (err, msgs) {
                 if (err) return cb(err)
-                console.log('msgs', msgs)
                 cb(null, msgs)
             })
         )
@@ -94,7 +129,8 @@ function App (sbot) {
         setName,
         setAvatar,
         getUrlForHash,
-        getUrlsForPosts
+        getUrlsForPosts,
+        getUrlForPost
     }
 }
 
