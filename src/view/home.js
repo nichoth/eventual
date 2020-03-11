@@ -6,7 +6,6 @@ function Home (props) {
 
     console.log('props', props)
     return <div className="posts">
-        posts
         <ul className="post-list">
             {props.posts.map(function (post) {
                 if (!post.value.content.mentions) return null
@@ -16,10 +15,13 @@ function Home (props) {
                     null
 
                 return <li className="post">
-                    {post.value.content.text}
                     {post.value.content.mentions ?
                         <img src={props.postUrls[hash]} /> :
                         null}
+                    <br />
+                    <div className="post-text">
+                        {post.value.content.text}
+                    </div>
                 </li>
 
                 // return hash ?

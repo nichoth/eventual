@@ -24,14 +24,15 @@ function startSSB () {
 
     // use dev database
     var appName = 'ssb-ev'
+
+    if (process.env.APP_NAME) {
+        appName += ('-' + process.env.APP_NAME)
+    }
+
     if (process.env.NODE_ENV === 'development') {
         appName = 'ssb-ev-DEV'
     } else if (process.env.NODE_ENV === 'test') {
         appName = 'ssb-ev-TEST-' + Math.random()
-    }
-
-    if (process.env.APP_NAME) {
-        appName += ('-' + process.env.APP_NAME)
     }
 
     if (process.env.NODE_ENV === 'test') {

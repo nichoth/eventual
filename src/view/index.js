@@ -40,11 +40,15 @@ function View (props) {
             </div>
 
             <div className="menu-item">
-                <a className="peers-link" href="peers">peers</a>
+                <a className="home-link" href="/">home</a>
             </div>
 
             <div className="menu-item">
-                <a className="pubs" href="pubs">pubs</a>
+                <a className="peers-link" href="/peers">peers</a>
+            </div>
+
+            <div className="menu-item">
+                <a className="pubs" href="/pubs">pubs</a>
             </div>
 
             <a className="new-post" href="/new">+</a>
@@ -52,7 +56,6 @@ function View (props) {
 
         <hr />
 
-        <button onClick={emit(evs.hello.world)}>emit event</button>
         <RouteView {...props} />
     </div>
 }

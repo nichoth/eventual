@@ -8,7 +8,6 @@ Start(function (err, { sbot, state }) {
 
     var app = App(sbot)
 
-
     console.log('fooo', sbot.friends)
     // S(
     //     sbot.friends.stream(),
@@ -48,8 +47,6 @@ Start(function (err, { sbot, state }) {
 
 
     app.getProfile(function (err, profile) {
-        // need to get the avatar blob in here too from the hash/id
-        // (returned in profile)
         if (err) throw err
 
         var hash = profile.image

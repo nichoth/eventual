@@ -39,3 +39,30 @@ img.no-avatar {
     padding: 1em;
     color: white;
 }
+
+body {
+    margin: 0;
+}
+#content {
+    background-color: rgba(119, 119, 119, 1);
+}
+
+.posts {
+    padding: 1em;
+    // background-color: rgba(119, 119, 119, 1);
+    .post-list {
+        list-style: none;
+        margin-top: 0;
+    }
+}
+
+.post {
+    border: 1px solid black;
+    margin-bottom: 2em;
+}
+
+.post-text {
+    color: white;
+    font-family: verdana, sans-serif;
+    margin-top: 0.5em;
+}
