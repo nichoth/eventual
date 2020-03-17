@@ -1,7 +1,7 @@
 var getAvatar = require('ssb-avatar')
 var S = require('pull-stream')
 var after = require('after')
-var Catch = require('pull-catch')
+// var Catch = require('pull-catch')
 
 function App (sbot) {
     function setName ({ id, name }, cb) {
@@ -52,7 +52,7 @@ function App (sbot) {
     function getUrlForPost () {
         return S(
             S.map(function onData (post) {
-                console.log('post', post)
+                // console.log('post', post)
                 if (!post.value.content.mentions) return null
 
                 var hash = post.value.content.mentions[0] ?

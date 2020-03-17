@@ -8,7 +8,6 @@ Start(function (err, { sbot, state }) {
 
     var app = App(sbot)
 
-    console.log('fooo', sbot.friends)
     // S(
     //     sbot.friends.stream(),
     //     S.collect(function (err, res) {
@@ -16,15 +15,8 @@ Start(function (err, { sbot, state }) {
     //     })
     // )
 
-    // S(
-    //     sbot.friends.createFriendStream({
-    //         hops: 1
-    //     }, function (err, res) {
-    //         console.log('here', err, res)
-    //     }),
-    //     S.log()
-    // )
 
+    // *logs a lot*
     // S(
     //     sbot.friends.createFriendStream({
     //         hops: 1
@@ -32,18 +24,8 @@ Start(function (err, { sbot, state }) {
     //     S.log()
     // )
 
-    // sbot.friends.stream(function (err, graph) {
-    //     console.log('friends stream', err, graph)
-    // })
 
-    // sbot.gossip.peers(function (err, peers) {
-    //     console.log('peers', err, peers)
-    // })
-
-    // S(
-    //     sbot.replicate.changes(),
-    //     S.log()
-    // )
+    console.log('friends', sbot.friends)
 
 
     app.getProfile(function (err, profile) {
@@ -72,7 +54,7 @@ Start(function (err, { sbot, state }) {
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
             }, function onEnd (err) {
-                console.log('end', err)
+                console.log('end get post urls', err)
             })
         )
     })
