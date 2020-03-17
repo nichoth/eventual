@@ -102,9 +102,9 @@ function subscribe({ state, view, sbot }) {
         )
     }
 
-    view.on(evs.post.new, function (ev) {
+    view.on(evs.post.new, function (file) {
         console.log('new', ev)
-        var file = ev.target.files[0]
+        // var file = ev.target.files[0]
         newPost(file, function (err, res) {
             console.log('published msg', err, res)
         })

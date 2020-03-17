@@ -2,13 +2,23 @@ var { h, Component } = require('preact')
 var evs = require('../EVENTS')
 
 function FilePreview (props) {
+    var { emit, selectedFile } = props
+
     return <div className="file-preview">
         <div className="image">
-            <img src={URL.createObjectURL(props.selectedFile)} />
+            <img src={URL.createObjectURL(selectedFile)} />
         </div>
+
         <div className="controls">
-            <button>nevermind</button>
-            <button>save</button>
+            <button onClick={function (ev) {
+                ev.preventDefault()
+                props.nevermind()
+            }}>nevermind</button>
+
+            <button onClick={function (ev) {
+                ev.preventDefault()
+                emit(evs.post.new, selectedFile)
+            }}>save</button>
         </div>
     </div>
 }
@@ -16,6 +26,7 @@ function FilePreview (props) {
 class New extends Component {
     constructor () {
         super()
+        this.nevermind = this.nevermind.bind(this)
         this.state = {
             selectedFile: null
         }
@@ -34,13 +45,19 @@ class New extends Component {
         })
     }
 
+    nevermind () {
+        this.setState({ selectedFile:  null })
+    }
+
     render (props) {
-        // var { emit } = props
+        var { emit } = props
 
         return <div className="new-post">
             <input type="file" accept="image/*" onChange={this.chooseFile} />
             {this.state.selectedFile ?
-                <FilePreview {...this.state} /> :
+                <FilePreview {...this.state} emit={emit}
+                    nevermind={this.nevermind}
+                /> :
                 null
             }
         </div>
