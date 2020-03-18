@@ -3,6 +3,7 @@ var xtend = require('xtend')
 var S = require('pull-stream')
 var fileReaderStream = require('filereader-pull-stream')
 var createHash = require('multiblob/util').createHash
+var ts = require('./types')
 
 function subscribe({ state, view, sbot }) {
     view.on(evs.hello.world, () => state.foo.set('bar'))
@@ -89,7 +90,7 @@ function subscribe({ state, view, sbot }) {
                 var hash = '&' + hasher.digest
                 
                 sbot.publish({
-                    type: 'post',
+                    type: ts.post,
                     text: 'checkout [this file!]('+hash+')',
                     mentions: [{
                       link: hash,        // the hash given by blobs.add

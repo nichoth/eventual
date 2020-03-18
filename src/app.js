@@ -1,6 +1,7 @@
 var getAvatar = require('ssb-avatar')
 var S = require('pull-stream')
 var after = require('after')
+var ts = require('./types')
 // var Catch = require('pull-catch')
 
 function App (sbot) {
@@ -114,7 +115,7 @@ function App (sbot) {
         S(
             sbot.messagesByType({
                 // todo: changge post type
-                type: 'post',
+                type: ts.post,
                 reverse: true,
                 limit: 20
             }),
