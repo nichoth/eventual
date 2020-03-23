@@ -78,11 +78,11 @@ function subscribe({ state, view, sbot }) {
         )
     }
 
-    function newPost (file, cb) {
+    function newPost ({ image, text }, cb) {
         var hasher = createHash('sha256')
 
         S(
-            fileReaderStream(file),
+            fileReaderStream(image),
             hasher,
             sbot.blobs.add(function (err, _hash) {
                 if (err) throw err
@@ -91,7 +91,7 @@ function subscribe({ state, view, sbot }) {
                 
                 sbot.publish({
                     type: ts.post,
-                    text: 'checkout [this file!]('+hash+')',
+                    text: text || '',
                     mentions: [{
                       link: hash,        // the hash given by blobs.add
                     //   name: 'hello.txt', // optional, but recommended
@@ -103,9 +103,9 @@ function subscribe({ state, view, sbot }) {
         )
     }
 
-    view.on(evs.post.new, function (file) {
+    view.on(evs.post.new, function ({ image, text }) {
         // var file = ev.target.files[0]
-        newPost(file, function (err, res) {
+        newPost({ image, text }, function (err, res) {
             console.log('published msg', err, res)
         })
     })

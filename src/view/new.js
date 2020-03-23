@@ -4,9 +4,13 @@ var evs = require('../EVENTS')
 function FilePreview (props) {
     var { selectedFile } = props
 
-    return <div className="file-preview">
+    return <form className="file-preview" onSubmit={props.savePost}>
         <div className="image">
             <img src={URL.createObjectURL(selectedFile)} />
+        </div>
+
+        <div className="text">
+            <textarea id="text" name="text"></textarea>
         </div>
 
         <div className="controls">
@@ -15,9 +19,9 @@ function FilePreview (props) {
                 props.nevermind()
             }}>Nevermind</button>
 
-            <button onClick={props.savePost}>Save</button>
+            <button type="submit">Save</button>
         </div>
-    </div>
+    </form>
 }
 
 class New extends Component {
@@ -36,7 +40,6 @@ class New extends Component {
     chooseFile (ev) {
         console.log('choose', ev)
         var file = ev.target.files[0]
-
         this.setState({ selectedFile: file })
     }
 
@@ -47,7 +50,12 @@ class New extends Component {
     savePost (ev) {
         ev.preventDefault()
         // todo should wait for save to finish
-        this.emit(evs.post.new, this.state.selectedFile)
+        var text = ev.target.elements.text.value
+        var image = this.state.selectedFile
+        console.log('text', { image, text })
+        // this.emit(evs.post.new, { image, text })
+        // this.emit(evs.post.new, this.state.selectedFile)
+        this.emit(evs.post.new, { image, text })
         this.setState({ selectedFile: null })
     }
 
