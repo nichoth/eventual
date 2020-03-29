@@ -1,5 +1,5 @@
 {
-  "main": "main.js",
+  "main": "public/main.js",
   "husky": {
     "hooks": {
       "pre-push": "./test/githook/prepush.sh"
@@ -76,7 +76,7 @@
     "preact-compat": "^3.19.0",
     "tap-spec": "^5.0.0",
     "tape-run": "^6.0.1",
-    "uglify-js": "^3.6.9",
+    "uglify-js": "^3.8.1",
     "unassertify": "^2.1.1"
   }
 }
