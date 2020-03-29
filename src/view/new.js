@@ -52,9 +52,6 @@ class New extends Component {
         // todo should wait for save to finish
         var text = ev.target.elements.text.value
         var image = this.state.selectedFile
-        console.log('text', { image, text })
-        // this.emit(evs.post.new, { image, text })
-        // this.emit(evs.post.new, this.state.selectedFile)
         this.emit(evs.post.new, { image, text })
         this.setState({ selectedFile: null })
     }
