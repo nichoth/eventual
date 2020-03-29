@@ -2,9 +2,7 @@
   "main": "main.js",
   "husky": {
     "hooks": {
-      "pre-push": "./test/githook/prepush.sh",
-      "pre-version": "npm run lint && npm test",
-      "post-version": "git push --no-verify && git push --tags --no-verify"
+      "pre-push": "./test/githook/prepush.sh"
     }
   },
   "scripts": {
@@ -13,12 +11,14 @@
     "instance": "concurrently --kill-others \"env $(cat .env | xargs) APP_NAME=\"instance2\" WS_PORT=\"8001\" node src/server/index.js\" \"npm run serve\"",
     "serve": "env $(cat .env | xargs) budo src/index.js:bundle.js --pushstate --dir=public --live -- -t babelify -g aliasify -t envify -dv",
     "build": "npm run build-js && npm run build-css",
-    "build-js": "browserify -p bundle-collapser/plugin example/index.js -t babelify -t [ envify --NODE_ENV production ] -g aliasify -g unassertify | uglifyjs -mc > public/bundle.js",
+    "build-js": "browserify -t babelify -p bundle-collapser/plugin src/index.js -t [ envify --NODE_ENV production ] -g aliasify -g unassertify > public/bundle.js",
     "build-css": "node-sass --output-style=compressed src/style/main.scss > public/style.css",
     "sass-watch": "node-sass --watch src/style/main.scss --source-map-embed public/style.css",
     "lint": "eslint . --config .eslintrc",
     "test": "tape test/{**/*,*}.js | tap-spec",
-    "test-browser": "concurrently --kill-others \"NODE_ENV=\"test\" node src/server/index.js\" \"browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec\""
+    "test-browser": "concurrently --kill-others \"NODE_ENV=\"test\" node src/server/index.js\" \"browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec\"",
+    "preversion": "npm run lint && npm test",
+    "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "dependencies": {
     "@nichoth/ok": "^2.0.0",
