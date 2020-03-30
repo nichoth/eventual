@@ -21,7 +21,7 @@
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "dependencies": {
-    "@nichoth/ok": "^2.0.0",
+    "@nichoth/ok": "^2.1.0",
     "after": "^0.8.2",
     "filereader-pull-stream": "^1.0.0",
     "multiblob": "^1.13.7",
