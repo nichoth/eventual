@@ -108,3 +108,5 @@ jspm_packages
 bundle.js
 .env
 public/style.css
+dist/
+
