@@ -1,11 +1,13 @@
 {
   "main": "public/main.js",
+  "version": "0.0.0",
   "husky": {
     "hooks": {
       "pre-push": "./test/githook/prepush.sh"
     }
   },
   "scripts": {
+    "dist": "electron-builder -c.snap.publish=github",
     "go": "concurrently --kill-others \"env $(cat .env | xargs) node src/server/index.js\" \"electron .\"",
     "start": "node-sass src/style/main.scss --source-map-embed > public/style.css && concurrently --kill-others \"env $(cat .env | xargs) node src/server/index.js\" \"npm run serve\" \"npm run sass-watch\"",
     "instance": "concurrently --kill-others \"env $(cat .env | xargs) APP_NAME=\"instance2\" WS_PORT=\"8001\" node src/server/index.js\" \"npm run serve\"",
@@ -65,6 +67,7 @@
     "bundle-collapser": "^1.3.0",
     "concurrently": "^5.0.2",
     "electron": "^7.2.1",
+    "electron-builder": "^22.4.1",
     "envify": "^4.1.0",
     "eslint": "^6.6.0",
     "eslint-config-minlint": "^2.0.0",
@@ -78,5 +81,52 @@
     "tape-run": "^6.0.1",
     "uglify-js": "^3.8.1",
     "unassertify": "^2.1.1"
+  },
+  "build": {
+    "appId": "org.eventual.gram",
+    "linux": {
+      "category": "Network",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        },
+        {
+          "target": "snap",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "deb": {
+      "packageCategory": "net",
+      "priority": "optional",
+      "maintainer": "Nick <nichoth@gmail.com>"
+    },
+    "dmg": {
+      "icon": "build/dmg/icon.icns"
+    },
+    "win": {
+      "publisherName": "foo",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    }
   }
 }

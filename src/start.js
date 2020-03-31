@@ -7,7 +7,10 @@ var evs = require('./EVENTS')
 
 function start (cb) {
     var state = State()
-    var { view } = ok(state, View, document.getElementById('content'))
+    var { view, routes } = ok(state, View, document.getElementById('content'))
+    routes(function onChange (route) {
+        console.log('route in here', route)
+    })
 
     Client({}, function (err, sbot) {
         if (err) {
