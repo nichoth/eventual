@@ -19,7 +19,6 @@
     "lint": "eslint . --config .eslintrc",
     "test": "tape test/{**/*,*}.js | tap-spec",
     "test-browser": "concurrently --kill-others \"NODE_ENV=\"test\" node src/server/index.js\" \"browserify -t babelify test-browser/index.js | htmlify test-browser/index.html | tape-run --input html | tap-spec\"",
-    "preversion": "npm run lint && npm test",
     "postversion": "git push --no-verify && git push --tags --no-verify"
   },
   "dependencies": {
