@@ -4,4 +4,6 @@ The cli option `-c.snap.publish=github` forces publishing snap not to Snap Store
 
 Releases are based on Git tags.
 
+* Can use github actions to automatically build & release electron app
+
 
