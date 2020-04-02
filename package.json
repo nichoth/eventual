@@ -115,7 +115,8 @@
       "maintainer": "Nick <nichoth@gmail.com>"
     },
     "dmg": {
-      "icon": "build/dmg/icon.icns"
+      "icon": "build/dmg/icon.icns",
+      "publish": ["github"]
     },
     "win": {
       "publisherName": "foo",
