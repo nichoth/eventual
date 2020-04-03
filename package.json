@@ -89,12 +89,6 @@
       "category": "Network",
       "target": [
         {
-          "target": "dmg",
-          "arch": [
-            "x64"
-          ]
-        },
-        {
           "target": "AppImage",
           "arch": [
             "x64",
