@@ -19,6 +19,6 @@ The cli option `-c.snap.publish=github` forces publishing snap not to Snap Store
 * There is a folder for github actions -- `.github/workflows/`
 
 #### workflows
-Workflows are combinations of GH actions. Actions are the smallest portable building block of a workflow. You can create workflows using actions defined in your repository. You can create a workflow file configured to run on specific events. To use an action in a workflow, you must include it as a step. The workflow file lives in the root of your GitHub repository in the .github/workflows directory.
+Each YAML-file inside your .github/workflows-directory constitutes one workflow. Each workflow can contain several so-called jobs. Workflows are combinations of GH actions. Actions are the smallest portable building block of a workflow. You can create workflows using actions defined in your repository. You can create a workflow file configured to run on specific events. To use an action in a workflow, you must include it as a step. The workflow file lives in the root of your GitHub repository in the `.github/workflows` directory.
 
 
