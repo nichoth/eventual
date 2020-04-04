@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require('electron')
+const { spawn } = require('child_process');
+var path = require('path')
 
 function createWindow () {
   // Create the browser window.
@@ -10,11 +12,24 @@ function createWindow () {
     }
   })
 
+  var server = spawn('node', [path.join(__dirname, '../src/server/index.js')])
+  server.on('exit', function (code, sig) {
+    console.log('server exit', code, sig)
+  })
+
+  server.on('error', function (err) {
+    console.log('server error', err)
+  })
+
+  server.stderr.on('data', function (err) {
+    console.log('server err', err.toString())
+  })
+
   // and load the index.html of the app.
   win.loadFile('./public/index.html')
 
   // Open the DevTools.
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
