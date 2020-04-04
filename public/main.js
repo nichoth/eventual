@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const { spawn } = require('child_process');
+const { spawn, fork } = require('child_process');
 var path = require('path')
 
 function createWindow () {
@@ -12,7 +12,8 @@ function createWindow () {
     }
   })
 
-  var server = spawn('node', [path.join(__dirname, '../src/server/index.js')])
+  var server = fork(require.resolve('../src/server/index.js'))
+  // var server = spawn('node', [path.join(__dirname, '../src/server/index.js')])
   server.on('exit', function (code, sig) {
     console.log('server exit', code, sig)
   })
@@ -21,9 +22,9 @@ function createWindow () {
     console.log('server error', err)
   })
 
-  server.stderr.on('data', function (err) {
-    console.log('server err', err.toString())
-  })
+  // server.stderr.on('data', function (err) {
+  //   console.log('server err', err.toString())
+  // })
 
   // and load the index.html of the app.
   win.loadFile('./public/index.html')
