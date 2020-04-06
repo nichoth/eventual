@@ -15,9 +15,9 @@ function State () {
         })
     })
 
-    state(function onChange (_state) {
-        console.log('change', _state)
-    })
+    // state(function onChange (_state) {
+    //     console.log('change', _state)
+    // })
     return state
 }
 

@@ -4,6 +4,7 @@ var Router = require('../routes')
 var evs = require('../EVENTS')
 
 function View (props) {
+    console.log('render', props)
     var { emit } = props
     var router = Router()
     if (props.route.pathname) var m = router.match(props.route.pathname)

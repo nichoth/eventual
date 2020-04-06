@@ -4,7 +4,6 @@ var App = require('../app')
 function Home (props) {
     if (!props.posts) return <div>home</div>
 
-    console.log('props', props)
     return <div className="posts">
         <ul className="post-list">
             {props.posts.map(function (post) {
