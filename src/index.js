@@ -8,14 +8,6 @@ Start(function (err, { sbot, state }) {
 
     var app = App(sbot)
 
-    // S(
-    //     sbot.friends.stream(),
-    //     S.collect(function (err, res) {
-    //         console.log('here', err, res)
-    //     })
-    // )
-
-
     // *logs a lot*
     // S(
     //     sbot.friends.createFriendStream({
@@ -23,9 +15,6 @@ Start(function (err, { sbot, state }) {
     //     }),
     //     S.log()
     // )
-
-
-    // console.log('friends', sbot.friends)
 
 
     app.getProfile(function (err, profile) {
@@ -40,10 +29,22 @@ Start(function (err, { sbot, state }) {
         })
     })
 
+    // listen for live messages
+    S(
+        app.postStream(),
+        app.getUrlForPost(),
+        S.drain(function ([hash, url]) {
+            console.log('in drain', [hash, url])
+            if (state.postUrls[hash]) return
+            var newState = {}
+            newState[hash] = url
+            state.postUrls.set(xtend(state.postUrls(), newState))
+        })
+    )
+
     app.getPosts(function (err, res) {
         if (err) throw err
         state.posts.set(res)
-        console.log('state', state())
 
         S(
             S.values(res),

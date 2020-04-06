@@ -113,7 +113,6 @@ function App (sbot) {
     function getPosts (cb) {
         S(
             sbot.messagesByType({
-                // todo: changge post type
                 type: ts.post,
                 reverse: true,
                 limit: 20
@@ -125,6 +124,17 @@ function App (sbot) {
         )
     }
 
+    function postStream () {
+        return S(
+            sbot.messagesByType({
+                type: ts.post,
+                reverse: true,
+                live: true,
+                limit: 20
+            })
+        )
+    }
+
     return {
         getPosts,
         getProfile,
@@ -132,7 +142,8 @@ function App (sbot) {
         setAvatar,
         getUrlForHash,
         getUrlsForPosts,
-        getUrlForPost
+        getUrlForPost,
+        postStream
     }
 }
 
