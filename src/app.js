@@ -53,7 +53,6 @@ function App (sbot) {
     function getUrlForPost () {
         return S(
             S.map(function onData (post) {
-                // console.log('post', post)
                 if (!post.value.content.mentions) return null
 
                 var hash = post.value.content.mentions[0] ?

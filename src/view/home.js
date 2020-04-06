@@ -14,6 +14,8 @@ function Home (props) {
                     post.value.content.mentions[0].link :
                     null
 
+                if (!hash) return null
+
                 return <li className="post">
                     {post.value.content.mentions ?
                         <img src={props.postUrls[hash]} /> :
@@ -23,15 +25,6 @@ function Home (props) {
                         {post.value.content.text}
                     </div>
                 </li>
-
-                // return hash ?
-                //     <li className="post">
-                //         {post.value.content.text}
-                //         {post.value.content.mentions ?
-                //             <img src={props.postUrls[hash]} /> :
-                //             null}
-                //     </li> :
-                //     null
             })}
         </ul>
     </div>

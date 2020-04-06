@@ -25,7 +25,7 @@ Start(function (err, { sbot, state }) {
     // )
 
 
-    console.log('friends', sbot.friends)
+    // console.log('friends', sbot.friends)
 
 
     app.getProfile(function (err, profile) {
