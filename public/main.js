@@ -22,6 +22,10 @@ function createWindow () {
     console.log('server error', err)
   })
 
+  app.on('will-quit', function (ev) {
+    server.kill()
+  })
+
   // server.stderr.on('data', function (err) {
   //   console.log('server err', err.toString())
   // })
@@ -53,10 +57,6 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
   }
-})
-
-app.on('will-quit', function (ev) {
-  server.kill()
 })
 
 // In this file you can include the rest of your app's specific main process
