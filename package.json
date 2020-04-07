@@ -11,7 +11,7 @@
   "scripts": {
     "dist": "electron-builder -c.snap.publish=github --mac --windows --linux",
     "release": "electron-builder --mac --windows --linux --publish always",
-    "go": "concurrently --kill-others \"env $(cat .env | xargs) node src/server/index.js\" \"electron .\"",
+    "tron": "electron .",
     "start": "node-sass src/style/main.scss --source-map-embed > public/style.css && concurrently --kill-others \"env $(cat .env | xargs) node src/server/index.js\" \"npm run serve\" \"npm run sass-watch\"",
     "instance": "concurrently --kill-others \"env $(cat .env | xargs) APP_NAME=\"instance2\" WS_PORT=\"8001\" node src/server/index.js\" \"npm run serve\"",
     "serve": "env $(cat .env | xargs) budo src/index.js:bundle.js --pushstate --dir=public --live -- -t babelify -g aliasify -t envify -dv",

@@ -12,7 +12,15 @@ function createWindow () {
     }
   })
 
+  // console.log('env', process.env)
   var server = fork(require.resolve('../src/server/index.js'))
+
+  server.on('message', function (msg) {
+    console.log('msg', msg)
+    // and load the index.html of the app.
+    win.loadFile('./public/index.html')
+  })
+
   // var server = spawn('node', [path.join(__dirname, '../src/server/index.js')])
   server.on('exit', function (code, sig) {
     console.log('server exit', code, sig)
@@ -29,9 +37,6 @@ function createWindow () {
   // server.stderr.on('data', function (err) {
   //   console.log('server err', err.toString())
   // })
-
-  // and load the index.html of the app.
-  win.loadFile('./public/index.html')
 
   // Open the DevTools.
   // win.webContents.openDevTools()
