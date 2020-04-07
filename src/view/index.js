@@ -2,16 +2,23 @@ var { h } = require('preact')
 var EditableField = require('./editable-field')
 var Router = require('../routes')
 var evs = require('../EVENTS')
+var { extname } = require('path')
 
 function View (props) {
     console.log('render', props)
     var { emit } = props
     var router = Router()
-    if (props.route.pathname) var m = router.match(props.route.pathname)
+
+    // for electron which starts with a file path
+    var { pathname } = props.route
+    if (extname(pathname) === '.html') pathname = '/'
+
+    if (pathname) var m = router.match(pathname)
     if (m) var RouteView = m.action(m)
     if (!m) var RouteView = function NotFound (props) {
         return <div>Couldnt find that path</div>
     }
+    console.log('route', props.route)
 
     var field = props.me.name ?
         (<EditableField

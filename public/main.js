@@ -12,11 +12,16 @@ function createWindow () {
     }
   })
 
-  // console.log('env', process.env)
+  // console.log('env', process.env.NODE_ENV)
   var server = fork(require.resolve('../src/server/index.js'))
 
+  // var appName
+  // if (process.env.NODE_ENV === 'development') {
+  //     appName = 'ssb-ev-DEV'
+  // }
+  // console.log('app name', appName)
+
   server.on('message', function (msg) {
-    console.log('msg', msg)
     // and load the index.html of the app.
     win.loadFile('./public/index.html')
   })
