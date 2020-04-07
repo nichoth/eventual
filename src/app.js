@@ -128,7 +128,7 @@ function App (sbot) {
         return S(
             sbot.messagesByType({
                 type: ts.post,
-                reverse: true,
+                // reverse: true,
                 live: true
             })
         )

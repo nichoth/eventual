@@ -36,23 +36,17 @@ Start(function (err, { sbot, state }) {
             S.through(function (post) {
                 if (post.sync === true) return
                 if (!state.posts()) return state.posts.set([post])
-                // var oldPost = state.posts().find(function (_post) {
-
-                //     // return (_post.value.content.mentions[0] ===
-                //     //     post.value.content.mentions[0])
-                // })
-                // if (oldPost) return
-                // var arr = state.posts()
-                // arr.unshift(post)
-                // state.posts.set(arr)
-                state.posts.set(state.posts().concat([post]))
+                var arr = state.posts()
+                arr.unshift(post)
+                state.posts.set(arr)
+                // state.posts.set(state.posts().concat([post]))
             }),
             S.filter(function (post) {
                 return post.value
             }),
             app.getUrlForPost(),
             S.drain(function ([hash, url]) {
-                // if (state.postUrls[hash]) return
+                if (state.postUrls[hash]) return
                 var newState = {}
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
