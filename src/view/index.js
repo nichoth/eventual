@@ -18,7 +18,6 @@ function View (props) {
     if (!m) var RouteView = function NotFound (props) {
         return <div>Couldnt find that path</div>
     }
-    console.log('route', props.route)
 
     var field = props.me.name ?
         (<EditableField
