@@ -86,7 +86,6 @@ function subscribe({ state, view, sbot }) {
             hasher,
             sbot.blobs.add(function (err, _hash) {
                 if (err) throw err
-                // console.log('added blob', err, hasher.digest, _hash)
                 var hash = '&' + hasher.digest
                 
                 sbot.publish({
@@ -104,8 +103,8 @@ function subscribe({ state, view, sbot }) {
     }
 
     view.on(evs.post.new, function ({ image, text }) {
-        // var file = ev.target.files[0]
         newPost({ image, text }, function (err, res) {
+            // do we set state here? or is it ok emitted in the live updates
             console.log('published msg', err, res)
         })
     })

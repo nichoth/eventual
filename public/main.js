@@ -21,7 +21,7 @@ function createWindow () {
   // }
   // console.log('app name', appName)
 
-  server.on('message', function (msg) {
+  server.once('message', function (msg) {
     // and load the index.html of the app.
     win.loadFile('./public/index.html')
   })
