@@ -85,7 +85,7 @@ function startSSB () {
         console.log('listening on ' + WS_PORT)
 
         // for electron .fork
-        process.send('ok')
+        if (process.send) process.send('ok')
     })
 
     ws({ server }, function onConnection (wsStream) {

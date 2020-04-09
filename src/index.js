@@ -42,6 +42,9 @@ Start(function (err, { sbot, state }) {
                 state.posts.set(arr)
                 // state.posts.set(state.posts().concat([post]))
             }),
+            S.through(function (post) {
+                console.log('post', post)
+            }),
             S.filter(function (post) {
                 return post.value
             }),
@@ -52,11 +55,13 @@ Start(function (err, { sbot, state }) {
                 var newState = {}
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
+            }, function donw () {
+                console.log('all done', arguments)
             })
         )
     }
 
-    liveUpdates()
+    // liveUpdates()
 
     // app.getPosts(function (err, res) {
     //     if (err) throw err

@@ -23,6 +23,7 @@ function App (sbot) {
     }
 
     function getProfile (cb) {
+        console.log('ok')
         sbot.whoami(function (err, res) {
             if (err) throw err
             var { id } = res
@@ -124,13 +125,11 @@ function App (sbot) {
     }
 
     function postStream () {
-        return S(
-            sbot.messagesByType({
-                type: ts.post,
-                // reverse: true,
-                live: true
-            })
-        )
+        return sbot.messagesByType({
+            type: ts.post,
+            // reverse: true,
+            live: true
+        })
     }
 
     return {
