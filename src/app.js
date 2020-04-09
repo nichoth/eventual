@@ -2,7 +2,7 @@ var getAvatar = require('ssb-avatar')
 var S = require('pull-stream')
 var after = require('after')
 var ts = require('./types')
-// var Catch = require('pull-catch')
+var Catch = require('pull-catch')
 
 function App (sbot) {
     function setName ({ id, name }, cb) {
@@ -25,7 +25,6 @@ function App (sbot) {
     function getProfile (cb) {
         console.log('profile start')
         sbot.whoami(function (err, res) {
-            console.log('got profile')
             if (err) throw err
             var { id } = res
 
@@ -39,10 +38,10 @@ function App (sbot) {
     function getUrlForHash (hash, cb) {
         S(
             sbot.blobs.get(hash),
-            // Catch(),
+            Catch(),
             S.collect(function (err, values) {
                 if (err) {
-                    console.log('err here', err)
+                    console.log('err in hetUrl', err)
                     return cb(err)
                 }
                 var blob = new Blob(values);

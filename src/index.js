@@ -2,6 +2,7 @@ var Start = require('./start')
 var App = require('./app.js')
 var S = require('pull-stream')
 var xtend = require('xtend')
+var Catch = require('pull-catch')
 
 Start(function (err, { sbot, state }) {
     if (err) throw err
@@ -16,10 +17,8 @@ Start(function (err, { sbot, state }) {
     //     S.log()
     // )
 
-
     app.getProfile(function (err, profile) {
         if (err) throw err
-        console.log('profile', profile)
         var hash = profile.image
         if (!hash) return state.me.set(profile)
         app.getUrlForHash(hash, function (err, url) {
@@ -42,20 +41,20 @@ Start(function (err, { sbot, state }) {
                 state.posts.set(arr)
                 // state.posts.set(state.posts().concat([post]))
             }),
-            S.through(function (post) {
-                console.log('post', post)
-            }),
+            // S.through(function (post) {
+            //     console.log('post', post)
+            // }),
             S.filter(function (post) {
                 return post.value
             }),
             app.getUrlForPost(),
             S.drain(function ([hash, url]) {
-                console.log('update', arguments)
+                console.log('live update', arguments)
                 if (state.postUrls[hash]) return
                 var newState = {}
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
-            }, function done () {
+            }, function done (err) {
                 console.log('all done', arguments)
             })
         )
