@@ -23,7 +23,7 @@ class Pubs extends Component {
             <hr />
             <code>
                 <pre>
-                    gossip.noisebridge.info:8008:@2NANnQVdsoqk0XPiJG2oMZqaEpTeoGrxOHJkLIqs7eY=.ed25519~C9eCJm9na5L7Zc/tKif1k2/FHS2Ugfm+oHWs9ROT/V8=
+                    ssb-pub.picodevelopment.nl:8008:@UFDjYpDN89OTdow4sqZP5eEGGcy+1eN/HNc5DMdMI0M=.ed25519~K0MgQE7srBFqw1/SavBJvtvf/XZx6MvC1Tb18ofENbU=
                 </pre>
             </code>
             Invite code: 
