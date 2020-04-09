@@ -61,7 +61,7 @@ Start(function (err, { sbot, state }) {
         )
     }
 
-    // liveUpdates()
+    liveUpdates()
 
     // app.getPosts(function (err, res) {
     //     if (err) throw err
