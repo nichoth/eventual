@@ -17,9 +17,14 @@ class Pubs extends Component {
     render (props) {
         var { pubs } = props
 
-        return <div>
+        return <div className="pubs-route">
             Add a pub
             <hr />
+            <code>
+                <pre>
+                    gossip.noisebridge.info:8008:@2NANnQVdsoqk0XPiJG2oMZqaEpTeoGrxOHJkLIqs7eY=.ed25519~C9eCJm9na5L7Zc/tKif1k2/FHS2Ugfm+oHWs9ROT/V8=
+                </pre>
+            </code>
             Invite code: 
             <form onSubmit={this.addPub}>
                 <input type="text" id="invite" name="invite" />

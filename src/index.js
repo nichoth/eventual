@@ -19,18 +19,19 @@ Start(function (err, { sbot, state }) {
 
     app.getProfile(function (err, profile) {
         if (err) throw err
-
+        console.log('profile', profile)
         var hash = profile.image
         if (!hash) return state.me.set(profile)
-        state.me.set(profile)
         app.getUrlForHash(hash, function (err, url) {
             if (err) throw err
             state.avatarUrl.set(url)
+            state.me.set(profile)
         })
     })
 
     // listen for live messages
     function liveUpdates () {
+        console.log('live start')
         S(
             app.postStream(),
             S.through(function (post) {
@@ -46,6 +47,7 @@ Start(function (err, { sbot, state }) {
             }),
             app.getUrlForPost(),
             S.drain(function ([hash, url]) {
+                console.log('update', arguments)
                 if (state.postUrls[hash]) return
                 var newState = {}
                 newState[hash] = url

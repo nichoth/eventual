@@ -76,7 +76,6 @@ function App (sbot) {
         var _urls = {}
         var next = after(posts.length, done)
         function done (err, urls) {
-            console.log('done', err, urls)
             if (err) return cb(err)
             cb(null, urls)
         }

@@ -72,6 +72,11 @@ body {
     border: 1px solid black;
     margin-bottom: 2em;
     text-align: center;
+    width: 100%;
+
+    img {
+        width: 100%;
+    }
 }
 
 .post-text {
@@ -97,6 +102,16 @@ body {
         margin-top: 1em;
         > button:first-child {
             margin-right: 1em;
+        }
+    }
+}
+
+.pubs-route {
+    form {
+        width: 100%;
+
+        input {
+            width: 100%;
         }
     }
 }
