@@ -11,7 +11,8 @@ class Pubs extends Component {
 
     addPub (ev) {
         ev.preventDefault()
-        this.emit(evs.pubs.add, ev.target.elements.invite.value)
+        var inv = (ev.target.elements.invite.value || '').trim()
+        this.emit(evs.pubs.add, inv)
     }
 
     render (props) {
