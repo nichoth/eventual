@@ -55,7 +55,7 @@ Start(function (err, { sbot, state }) {
                 var newState = {}
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
-            }, function donw () {
+            }, function done () {
                 console.log('all done', arguments)
             })
         )

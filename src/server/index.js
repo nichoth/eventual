@@ -29,7 +29,7 @@ function startSSB () {
         appName += ('-' + process.env.APP_NAME)
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' && !process.env.APP_NAME) {
         appName = 'ssb-ev-DEV'
     } else if (process.env.NODE_ENV === 'test') {
         appName = 'ssb-ev-TEST-' + Math.random()
@@ -40,6 +40,8 @@ function startSSB () {
             rimraf.sync(path.join(home, '.' + appName))
         })
     }
+    
+    console.log('app name', appName)
 
     var opts = {}
     opts.caps = caps
