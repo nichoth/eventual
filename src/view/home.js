@@ -13,6 +13,8 @@ function Home (props) {
                     post.value.content.mentions[0].link :
                     null
 
+                var { author } = post.value
+
                 if (!hash) return null
 
                 return <li className="post">
@@ -22,6 +24,9 @@ function Home (props) {
                     <br />
                     <div className="post-text">
                         {post.value.content.text}
+                    </div>
+                    <div className="author">
+                        {author}
                     </div>
                 </li>
             })}
