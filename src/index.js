@@ -2,7 +2,7 @@ var Start = require('./start')
 var App = require('./app.js')
 var S = require('pull-stream')
 var xtend = require('xtend')
-var Catch = require('pull-catch')
+// var Catch = require('pull-catch')
 
 Start(function (err, { sbot, state }) {
     if (err) throw err
@@ -41,9 +41,9 @@ Start(function (err, { sbot, state }) {
                 state.posts.set(arr)
                 // state.posts.set(state.posts().concat([post]))
             }),
-            // S.through(function (post) {
-            //     console.log('post', post)
-            // }),
+            S.through(function (post) {
+                console.log('post', post)
+            }),
             S.filter(function (post) {
                 return post.value
             }),
