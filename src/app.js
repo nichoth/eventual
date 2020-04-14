@@ -41,7 +41,9 @@ function App (sbot) {
             // Catch(),
             S.collect(function (err, values) {
                 if (err) {
-                    return console.log('err in getUrl', err)
+                    // if you don't cb, the app just stops
+                    return cb(null)
+                    // return console.log('err in getUrl', err)
                     // return cb(err)
                 }
                 var blob = new Blob(values);
