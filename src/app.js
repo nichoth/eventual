@@ -41,8 +41,8 @@ function App (sbot) {
             // Catch(),
             S.collect(function (err, values) {
                 if (err) {
-                    console.log('err in getUrl', err)
-                    return cb(err)
+                    return console.log('err in getUrl', err)
+                    // return cb(err)
                 }
                 var blob = new Blob(values);
                 var imageUrl = URL.createObjectURL(blob);
