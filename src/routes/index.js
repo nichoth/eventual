@@ -3,10 +3,12 @@ var Home = require('../view/home')
 var New = require('../view/new')
 var Peers = require('../view/peers')
 var Pubs = require('../view/pubs')
+var evs = require('../EVENTS')
 
-function start () {
+function start (emit) {
     var router = Router()
     router.addRoute('/', function foo (match) {
+        emit(evs.route.home, match)
         return Home
     })
 

@@ -108,6 +108,10 @@ function subscribe({ state, view, sbot }) {
             console.log('published msg', err, res)
         })
     })
+
+    view.on(evs.route.home, function (match) {
+        console.log('home event', match)
+    })
 }
 
 module.exports = subscribe

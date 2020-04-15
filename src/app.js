@@ -23,7 +23,6 @@ function App (sbot) {
     }
 
     function getProfile (cb) {
-        console.log('profile start')
         sbot.whoami(function (err, res) {
             if (err) throw err
             var { id } = res

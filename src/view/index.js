@@ -7,7 +7,7 @@ var { extname } = require('path')
 function View (props) {
     console.log('render', props)
     var { emit } = props
-    var router = Router()
+    var router = Router(emit)
 
     // for electron which starts with a file path
     var { pathname } = props.route

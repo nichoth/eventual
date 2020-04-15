@@ -22,7 +22,8 @@ Start(function (err, { sbot, state }) {
         var hash = profile.image
         if (!hash) return state.me.set(profile)
         app.getUrlForHash(hash, function (err, url) {
-            if (err) throw err
+            // if (err) throw err
+            if (err) return console.log('err profile', err)
             state.avatarUrl.set(url)
             state.me.set(profile)
         })
