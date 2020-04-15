@@ -8,7 +8,7 @@ var evs = require('../EVENTS')
 function start (emit) {
     var router = Router()
     router.addRoute('/', function foo (match) {
-        emit(evs.route.home, match)
+        // emit(evs.route.home, match)
         return Home
     })
 

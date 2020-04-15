@@ -41,9 +41,9 @@ function App (sbot) {
             S.collect(function (err, values) {
                 if (err) {
                     // if you don't cb, the app just stops
-                    return cb(null)
+                    // return cb(null)
                     // return console.log('err in getUrl', err)
-                    // return cb(err)
+                    return cb(err)
                 }
                 var blob = new Blob(values);
                 var imageUrl = URL.createObjectURL(blob);
@@ -67,7 +67,7 @@ function App (sbot) {
             S.filter(Boolean),
             S.asyncMap(function (hash, cb) {
                 getUrlForHash(hash, function (err, url) {
-                    if (err) return cb(err)
+                    if (err) return cb(null, [hash, null])
                     cb(null, [hash, url])
                 })
             })
