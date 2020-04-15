@@ -2,7 +2,6 @@ var Start = require('./start')
 var App = require('./app.js')
 var S = require('pull-stream')
 var xtend = require('xtend')
-// var Catch = require('pull-catch')
 
 Start(function (err, { sbot, state }) {
     if (err) throw err

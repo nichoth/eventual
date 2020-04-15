@@ -67,6 +67,7 @@ function App (sbot) {
             S.filter(Boolean),
             S.asyncMap(function (hash, cb) {
                 getUrlForHash(hash, function (err, url) {
+                    // swallow the err here for getURl
                     if (err) return cb(null, [hash, null])
                     cb(null, [hash, url])
                 })

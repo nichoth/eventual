@@ -4,10 +4,23 @@ var subscribe = require('./subscribe')
 var State = require('./state')
 var View = require('./view')
 var evs = require('./EVENTS')
+var Router = require('./routes')
 
 function start (cb) {
     var state = State()
-    var { view } = ok(state, View, document.getElementById('content'))
+    var router = Router()
+    var { view } = ok(state, View, document.getElementById('content'), {
+        onRoute: function (route) {
+            var m = router.match(route.href)
+            // emit the route events
+            // should do this less wonky
+            if (m) var { events } = m.action(m)
+            events.forEach(function(ev) {
+                console.log('ev', ev)
+                view.emit(ev, m)
+            })
+        }
+    })
 
     Client({}, function (err, sbot) {
         if (err) {
@@ -17,9 +30,7 @@ function start (cb) {
 
         subscribe({ state, view, sbot })
 
-        if (cb) {
-            cb(null, { sbot, state, view })
-        }
+        if (cb) cb(null, { sbot, state, view })
     })
 
     if (process.env.NODE_ENV === 'development') {
@@ -28,23 +39,3 @@ function start (cb) {
 }
 
 module.exports = start
-
-        // S(
-        //     sbot.createFeedStream(),
-        //     S.through(console.log.bind(console, 'post')),
-        //     S.onEnd(function (err) {
-        //         console.log('done', err)
-        //     })
-        // )
-
-        // var msg = {
-        //     type: 'post',
-        //     test: 'first post'
-        // }
-        // sbot.publish(msg, function (err, data) {
-        //     console.log('pub', err, data)
-        // })
-
-        // sbot.whoami(function (err, who) {
-        //     console.log('who', err, who)
-        // })

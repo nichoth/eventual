@@ -1,8 +1,8 @@
 var { h } = require('preact')
+var { extname } = require('path')
 var EditableField = require('./editable-field')
 var Router = require('../routes')
 var evs = require('../EVENTS')
-var { extname } = require('path')
 
 var router = Router()
 
@@ -15,7 +15,8 @@ function View (props) {
     if (extname(pathname) === '.html') pathname = '/'
 
     if (pathname) var m = router.match(pathname)
-    if (m) var RouteView = m.action(m)
+    if (m) var res = m.action(m)
+    if (m) var RouteView = res.view
     if (!m) var RouteView = function NotFound (props) {
         return <div>Couldnt find that path</div>
     }

@@ -5,23 +5,22 @@ var Peers = require('../view/peers')
 var Pubs = require('../view/pubs')
 var evs = require('../EVENTS')
 
-function start (emit) {
+function start () {
     var router = Router()
-    router.addRoute('/', function foo (match) {
-        // emit(evs.route.home, match)
-        return Home
+    router.addRoute('/', function (match) {
+        return { view: Home, events: [ evs.route.home ] }
     })
 
     router.addRoute('/new', function (match) {
-        return New
+        return { view: New, events: [] }
     })
 
     router.addRoute('/peers', function (match) {
-        return Peers
+        return { view: Peers, events: [] }
     })
 
     router.addRoute('/pubs', function (match) {
-        return Pubs
+        return { view: Pubs, events: [] }
     })
 
     return router
