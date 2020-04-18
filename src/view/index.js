@@ -29,7 +29,7 @@ function View (props) {
 
     var image = props.avatarUrl ? 
         <div className="avatar-box">
-            <img className={'avatar'} src={ props.avatarUrl } />
+            <img className={'avatar'} src={props.avatarUrl} />
         </div> :
         null
 

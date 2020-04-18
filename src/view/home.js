@@ -1,5 +1,5 @@
 var { h } = require('preact')
-var App = require('../app')
+// var App = require('../app')
 
 function Home (props) {
     if (!props.posts) return <div>home</div>

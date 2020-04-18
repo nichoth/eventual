@@ -36,28 +36,28 @@ module.exports = connectSbot
 // })
 
 // function start (cb) {
-    // var keys = ssbKeys.loadOrCreateSync('./app-private.key')
-    // ssbClient(
-    //     keys,                // optional, defaults to ~/.ssb/secret
-    //     {
-    //         host: 'localhost', // optional, defaults to localhost
-    //         port: 8008,        // optional, defaults to 8008
-    //         key: keys.id,      // optional, defaults to keys.id
+// var keys = ssbKeys.loadOrCreateSync('./app-private.key')
+// ssbClient(
+//     keys,                // optional, defaults to ~/.ssb/secret
+//     {
+//         host: 'localhost', // optional, defaults to localhost
+//         port: 8008,        // optional, defaults to 8008
+//         key: keys.id,      // optional, defaults to keys.id
 
-    //         caps: {
-    //             // random string for `appKey` in secret-handshake
-    //             shs: '123'
-    //         },
+//         caps: {
+//             // random string for `appKey` in secret-handshake
+//             shs: '123'
+//         },
 
-    //         // optional, muxrpc manifest. Defaults to ~/.ssb/manifest.json
-    //         manifest: manifest
-    //     },
+//         // optional, muxrpc manifest. Defaults to ~/.ssb/manifest.json
+//         manifest: manifest
+//     },
 
-    //     function (err, sbot, config) {
-    //         cb(err, sbot, config)
-    //         console.log('cb', err, sbot)
-    //     }
-    // )
+//     function (err, sbot, config) {
+//         cb(err, sbot, config)
+//         console.log('cb', err, sbot)
+//     }
+// )
 
 // }
 

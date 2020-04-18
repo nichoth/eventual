@@ -70,7 +70,7 @@ function subscribe({ state, view, sbot }) {
                 }, function (err, res) {
                     if (err) return cb(err)
                     var opts = { res: res, hash: '&' + hasher.digest }
-                        // /*blob: file*/ } 
+                    // /*blob: file*/ } 
                     cb(null, opts)
                 })
             })
@@ -91,7 +91,7 @@ function subscribe({ state, view, sbot }) {
                     type: ts.post,
                     text: text || '',
                     mentions: [{
-                      link: hash,        // the hash given by blobs.add
+                        link: hash,        // the hash given by blobs.add
                     //   name: 'hello.txt', // optional, but recommended
                     //   size: 12,          // optional, but recommended
                     //   type: 'text/plain' // optional, but recommended

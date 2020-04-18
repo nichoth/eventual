@@ -4,21 +4,22 @@ var evs = require('../EVENTS')
 function FilePreview (props) {
     var { selectedFile } = props
 
+    function nevermind (ev) {
+        ev.preventDefault()
+        props.nevermind()
+    }
+
     return <form className="file-preview" onSubmit={props.savePost}>
         <div className="image">
             <img src={URL.createObjectURL(selectedFile)} />
         </div>
 
         <div className="text">
-            <textarea id="text" name="text"></textarea>
+            <textarea id="text" name="text" />
         </div>
 
         <div className="controls">
-            <button onClick={function (ev) {
-                ev.preventDefault()
-                props.nevermind()
-            }}>Nevermind</button>
-
+            <button onClick={nevermind}>Nevermind</button>
             <button type="submit">Save</button>
         </div>
     </form>

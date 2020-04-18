@@ -45,8 +45,8 @@ function App (sbot) {
                     // return console.log('err in getUrl', err)
                     return cb(err)
                 }
-                var blob = new Blob(values);
-                var imageUrl = URL.createObjectURL(blob);
+                var blob = new Blob(values)
+                var imageUrl = URL.createObjectURL(blob)
                 cb(null, imageUrl)
             })
         )

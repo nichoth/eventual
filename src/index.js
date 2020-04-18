@@ -55,6 +55,7 @@ Start(function (err, { sbot, state }) {
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
             }, function done (err) {
+                if (err) return console.log('error', err)
                 console.log('all done', arguments)
             })
         )

@@ -16,7 +16,6 @@ function start (cb) {
             // should do this less wonky
             if (m) var { events } = m.action(m)
             events.forEach(function(ev) {
-                console.log('ev', ev)
                 view.emit(ev, m)
             })
         }

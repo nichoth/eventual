@@ -71,12 +71,12 @@ function startSSB () {
         .use(require('ssb-friends'))
         .call(null, config)
 
-        // .use(require('ssb-private'))
-        // .use(require('ssb-about'))
-        // .use(require('ssb-contacts'))
-        // .use(require('ssb-query'))
-        // .use(require('scuttlebot/plugins/invite'))
-        // .use(require('scuttlebot/plugins/local'))
+    // .use(require('ssb-private'))
+    // .use(require('ssb-about'))
+    // .use(require('ssb-contacts'))
+    // .use(require('ssb-query'))
+    // .use(require('scuttlebot/plugins/invite'))
+    // .use(require('scuttlebot/plugins/local'))
 
     var server = http.createServer(function onRequest (req, res) {
         console.log('got request')
