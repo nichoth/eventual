@@ -14,9 +14,11 @@ function start (cb) {
             var m = router.match(route.href)
             // emit the route events
             // should do this less wonky
+            // console.log('m', m.action)
             if (m && typeof m.action === 'function') {
                 var { events } = m.action(m)
             }
+            // if (m) var { events } = m.action(m)
             (events || []).forEach(function(ev) {
                 view.emit(ev, m)
             })
