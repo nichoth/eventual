@@ -2,7 +2,7 @@
   "name": "eventual-gram",
   "description": "ssb-based photo sharing",
   "main": "public/main.js",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "husky": {
     "hooks": {
       "pre-push": "./test/githook/prepush.sh"
