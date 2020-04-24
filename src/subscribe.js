@@ -97,7 +97,10 @@ function subscribe({ state, view, sbot }) {
                     //   size: 12,          // optional, but recommended
                     //   type: 'text/plain' // optional, but recommended
                     }]
-                }, cb)
+                }, function (err, data) {
+                    // console.log('new post', err, data, _hash)
+                    cb.apply(null, arguments)
+                })
             })
         )
     }

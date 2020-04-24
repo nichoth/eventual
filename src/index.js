@@ -33,27 +33,31 @@ Start(function (err, { sbot, state }) {
         console.log('live start')
         S(
             app.postStream(),
-            S.through(function (post) {
-                if (post.sync === true) return
-                if (!state.posts()) return state.posts.set([post])
-                var arr = state.posts()
-                arr.unshift(post)
-                state.posts.set(arr)
-                // state.posts.set(state.posts().concat([post]))
-            }),
-            S.through(function (post) {
-                console.log('post', post)
-            }),
+            // S.through(function (post) {
+            //     // TODO -- fix this for image race condition
+            //     // should create a URL simultaneously with state.post
+            //     if (post.sync === true) return
+            //     // if (!state.posts()) return state.posts.set([post])
+            //     var arr = (state.posts() || [])
+            //     arr.unshift(post)
+            //     state.posts.set(arr)
+            // }),
             S.filter(function (post) {
                 return post.value
             }),
             app.getUrlForPost(),
-            S.drain(function ([hash, url]) {
+            S.drain(function ([hash, url, post]) {
                 console.log('live update', arguments)
                 if (state.postUrls[hash]) return
                 var newState = {}
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
+
+                if (post.sync === true) return
+                var arr = (state.posts() || [])
+                arr.unshift(post)
+                state.posts.set(arr)
+
             }, function done (err) {
                 if (err) return console.log('error', err)
                 console.log('all done', arguments)

@@ -2,6 +2,7 @@ var getAvatar = require('ssb-avatar')
 var S = require('pull-stream')
 var after = require('after')
 var ts = require('./types')
+var toURL = require('ssb-serve-blobs/id-to-url')
 // var Catch = require('pull-catch')
 
 function App (sbot) {
@@ -34,6 +35,12 @@ function App (sbot) {
         })
     }
 
+    if (process.env.NODE_ENV === 'development') {
+        window.app = window.app || {}
+        window.app.getUrlForHash = getUrlForHash
+        window.app.toURL = toURL
+    }
+
     function getUrlForHash (hash, cb) {
         S(
             sbot.blobs.get(hash),
@@ -62,15 +69,11 @@ function App (sbot) {
                     null
                 if (!hash) return null
                 if (hash[0] != '&') return null
-                return hash
+                return [hash, post]
             }),
             S.filter(Boolean),
-            S.asyncMap(function (hash, cb) {
-                getUrlForHash(hash, function (err, url) {
-                    // swallow the err here for getURl
-                    if (err) return cb(null, [hash, null])
-                    cb(null, [hash, url])
-                })
+            S.map(function ([hash, post]) {
+                return [hash, toURL(hash), post]
             })
         )
     }

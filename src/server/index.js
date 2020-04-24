@@ -62,6 +62,7 @@ function startSSB () {
     var _sbot = sbot
         .use(require('ssb-plugins'))
         .use(require('ssb-master'))
+        // .use(require('ssb-ws'))
         .use(require('ssb-gossip'))
         .use(require('ssb-replicate'))
         .use(require('ssb-backlinks'))
