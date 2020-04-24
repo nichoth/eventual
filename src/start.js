@@ -15,6 +15,7 @@ function start (cb) {
             // emit the route events
             // should do this less wonky
             // console.log('m', m.action)
+            // console.log('m', typeof m.action)
             if (m && typeof m.action === 'function') {
                 var { events } = m.action(m)
             }

@@ -16,6 +16,7 @@ function subscribe({ state, view, sbot }) {
             }
 
             console.log('pubs add', res)
+            if (state.pubs.err()) state.pubs.err.set(null)
             state.pubs.list.set(res)
         })
     })
