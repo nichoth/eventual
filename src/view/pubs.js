@@ -23,7 +23,7 @@ class Pubs extends Component {
             <hr />
             <code>{
                 // eslint-disable-next-line
-                }<pre>ssb-pub.picodevelopment.nl:8008:@UFDjYpDN89OTdow4sqZP5eEGGcy+1eN/HNc5DMdMI0M=.ed25519~K0MgQE7srBFqw1/SavBJvtvf/XZx6MvC1Tb18ofENbU=</pre>
+                }<pre>us-west.ssbpeer.net:8008:@MauI+NQ1dOg4Eo5NPs4OKxVQgWXMjlp5pjQ87CdRJtQ=.ed25519~F6cXW6IMaLPZXNNHTAq9UL70lc1w5qfFdQybHTWTwko=</pre>
             </code>
             Invite code: 
             <form onSubmit={this.addPub}>
