@@ -99,6 +99,7 @@ function subscribe({ state, view, sbot }) {
                     }]
                 }, function (err, data) {
                     // console.log('new post', err, data, _hash)
+                    if (err) return cb(err)
                     cb.apply(null, arguments)
                 })
             })
