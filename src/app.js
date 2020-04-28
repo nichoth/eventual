@@ -35,7 +35,7 @@ function App (sbot) {
         })
     }
 
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
         window.app = window.app || {}
         window.app.getUrlForHash = getUrlForHash
         window.app.toURL = toURL
@@ -69,8 +69,18 @@ function App (sbot) {
                     null
                 if (!hash) return null
                 if (hash[0] != '&') return null
+                // console.log('mentions', post.value.content.mentions)
                 return [hash, post]
             }),
+            // S.through(function ([hash, post]) {
+            //     console.log('hash', hash)
+            //     S(
+            //         sbot.blobs.get(hash),
+            //         S.collect(function (err, res) {
+            //             console.log('blobs.get', err, res)
+            //         })
+            //     )
+            // }),
             S.filter(Boolean),
             S.map(function ([hash, post]) {
                 return [hash, toURL(hash), post]

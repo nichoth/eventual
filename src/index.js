@@ -8,6 +8,13 @@ Start(function (err, { sbot, state }) {
 
     var app = App(sbot)
 
+    // console.log('wants', sbot.blobs.ls(() => console.log(arguments)))
+    // S(
+    //     sbot.blobs.ls(),
+    //     S.log(),
+    //     S.drain(() => console.log('done', arguments))
+    // )
+
     // *logs a lot*
     // S(
     //     sbot.friends.createFriendStream({
@@ -15,6 +22,20 @@ Start(function (err, { sbot, state }) {
     //     }),
     //     S.log()
     // )
+
+    console.log('gossip', sbot.gossip)
+
+    sbot.gossip.peers(function (err, res) {
+        console.log('peers', err, res)
+    })
+
+    // sbot.gossip.add({
+    //     host:'localhost',
+    //     port: 8000,
+    //     key: '@fZu02XAvFo/dQG5Vhv4qo4zzIvBphcnq9Z9XI5J7cDA=.ed25519'
+    // }, function (err, res) {
+    //     console.log('ok', arguments)
+    // })
 
     app.getProfile(function (err, profile) {
         if (err) throw err
@@ -48,6 +69,24 @@ Start(function (err, { sbot, state }) {
             app.getUrlForPost(),
             S.drain(function ([hash, url, post]) {
                 console.log('live update', arguments)
+
+                sbot.blobs.has(hash, function (err, res) {
+                    if (!res) {
+                        console.log('miss', err, res)
+
+                        S(
+                            sbot.blobs.get(hash),
+                            S.collect(function (err, res) {
+                                console.log('blobs.get', err, res)
+                            })
+                        )
+
+                        sbot.blobs.want(hash, {}, function(err, res) {
+                            console.log('want cb', err, res)
+                        })
+                    }
+                })
+
                 if (state.postUrls[hash]) return
                 var newState = {}
                 newState[hash] = url
