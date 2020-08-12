@@ -13,6 +13,8 @@ function subscribe({ state, view, sbot, app }) {
     view.on(evs.app.start, (ev) => {
         console.log('start', ev)
 
+        app.liveUpdates()
+
         app.getProfile(function (err, profile) {
             if (err) throw err
             var hash = profile.image

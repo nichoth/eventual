@@ -1,26 +1,17 @@
 var Start = require('./start')
 var App = require('./app.js')
 var evs = require('./EVENTS')
-var S = require('pull-stream')
-// var xtend = require('xtend')
 var subscribe = require('./subscribe')
-// const subscribe = require('./subscribe')
 
 Start(function (err, { sbot, state, view }) {
     if (err) throw err
+    console.log('gossip', sbot.gossip)
 
     var app = App(state, sbot)
 
-
-    // @todo
     subscribe({ app, view, state, sbot })
 
-
-
     view.emit(evs.app.start, { ok: 'ok' })
-
-    app.liveUpdates()
-
 
 
     // console.log('wants', sbot.blobs.ls(() => console.log(arguments)))
@@ -38,7 +29,6 @@ Start(function (err, { sbot, state, view }) {
     //     S.log()
     // )
 
-    console.log('gossip', sbot.gossip)
 
     // sbot.gossip.peers(function (err, res) {
     //     console.log('peers', err, res)
