@@ -2,6 +2,7 @@ var Start = require('./start')
 var App = require('./app.js')
 var S = require('pull-stream')
 var xtend = require('xtend')
+var subscribe = require('./subscribe')
 // const subscribe = require('./subscribe')
 
 Start(function (err, { sbot, state, view }) {
@@ -11,7 +12,7 @@ Start(function (err, { sbot, state, view }) {
 
 
     // @todo
-    // subscribe({ app, view, state })
+    subscribe({ app, view, state })
 
 
 
@@ -36,9 +37,9 @@ Start(function (err, { sbot, state, view }) {
 
     console.log('gossip', sbot.gossip)
 
-    sbot.gossip.peers(function (err, res) {
-        console.log('peers', err, res)
-    })
+    // sbot.gossip.peers(function (err, res) {
+    //     console.log('peers', err, res)
+    // })
 
     // sbot.gossip.add({
     //     host:'localhost',
