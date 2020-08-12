@@ -5,7 +5,7 @@ var fileReaderStream = require('filereader-pull-stream')
 var createHash = require('multiblob/util').createHash
 var ts = require('./types')
 
-function subscribe({ state, view, sbot }) {
+function subscribe({ state, view, sbot, app }) {
     view.on(evs.hello.world, () => state.foo.set('bar'))
 
     view.on(evs.pubs.add, function (invite) {

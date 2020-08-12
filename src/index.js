@@ -2,11 +2,22 @@ var Start = require('./start')
 var App = require('./app.js')
 var S = require('pull-stream')
 var xtend = require('xtend')
+// const subscribe = require('./subscribe')
 
-Start(function (err, { sbot, state }) {
+Start(function (err, { sbot, state, view }) {
     if (err) throw err
 
     var app = App(sbot)
+
+
+    // @todo
+    // subscribe({ app, view, state })
+
+
+
+    view.on('*', function (ev) {
+        console.log('ev', ev)
+    })
 
     // console.log('wants', sbot.blobs.ls(() => console.log(arguments)))
     // S(

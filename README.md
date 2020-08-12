@@ -23,3 +23,13 @@ The cli option `-c.snap.publish=github` forces publishing snap not to Snap Store
 #### workflows
 Each YAML-file inside your .github/workflows-directory constitutes one workflow. Each workflow can contain several so-called jobs. Workflows are combinations of GH actions. Actions are the smallest portable building block of a workflow. You can create workflows using actions defined in your repository. You can create a workflow file configured to run on specific events. To use an action in a workflow, you must include it as a step. The workflow file lives in the root of your GitHub repository in the `.github/workflows` directory.
 
+
+----------------------------------------
+
+`index.js` is where things start. We call the fns defined in `app.js`.
+
+`start.js` is where we connect the view renderer & app
+
+`start` starts the app, `client` make an rpc connection to sbot.
+
+Keep start & client as is, but subscription should be called in `index`. Rename `start` to `start-app` or something. `app` should be used only in subscription file, `app` should be the only one that uses `sbot` b/c that way we can swap it out with a different backend that has the same API.

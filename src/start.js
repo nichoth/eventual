@@ -1,6 +1,6 @@
 var ok = require('@nichoth/ok')
 var Client = require('./client')
-var subscribe = require('./subscribe')
+// var subscribe = require('./subscribe')
 var State = require('./state')
 var View = require('./view')
 var evs = require('./EVENTS')
@@ -14,8 +14,6 @@ function start (cb) {
             var m = router.match(route.href)
             // emit the route events
             // should do this less wonky
-            // console.log('m', m.action)
-            // console.log('m', typeof m.action)
             if (m && typeof m.action === 'function') {
                 var { events } = m.action(m)
             }
@@ -32,7 +30,7 @@ function start (cb) {
             throw err
         }
 
-        subscribe({ state, view, sbot })
+        // subscribe({ state, view, sbot })
 
         if (process.env.NODE_ENV === 'development' ||
             process.env.NODE_ENV === 'test') {
@@ -41,10 +39,6 @@ function start (cb) {
 
         if (cb) cb(null, { sbot, state, view })
     })
-
-    // if (process.env.NODE_ENV === 'development') {
-    //     window.app = { state, view, EVENTS: evs }
-    // }
 }
 
 module.exports = start
