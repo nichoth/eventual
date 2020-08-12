@@ -12,7 +12,7 @@ Start(function (err, { sbot, state, view }) {
 
 
     // @todo
-    subscribe({ app, view, state })
+    subscribe({ app, view, state, sbot })
 
 
 
