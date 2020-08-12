@@ -12,6 +12,18 @@ function subscribe({ state, view, sbot, app }) {
 
     view.on(evs.app.start, (ev) => {
         console.log('start', ev)
+
+        app.getProfile(function (err, profile) {
+            if (err) throw err
+            var hash = profile.image
+            if (!hash) return state.me.set(profile)
+            app.getUrlForHash(hash, function (err, url) {
+                // if (err) throw err
+                if (err) return console.log('err profile', err)
+                state.avatarUrl.set(url)
+                state.me.set(profile)
+            })
+        })
     })
 
     view.on(evs.hello.world, () => state.foo.set('bar'))

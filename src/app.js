@@ -1,11 +1,12 @@
 var getAvatar = require('ssb-avatar')
+var xtend = require('xtend')
 var S = require('pull-stream')
 var after = require('after')
 var ts = require('./types')
 var toURL = require('ssb-serve-blobs/id-to-url')
 // var Catch = require('pull-catch')
 
-function App (sbot) {
+function App (state, sbot) {
     function setName ({ id, name }, cb) {
         sbot.publish({
             type: 'about',
@@ -158,6 +159,61 @@ function App (sbot) {
         })
     }
 
+    // listen for live messages
+    function liveUpdates () {
+        console.log('live start')
+        S(
+            postStream(),
+            // S.through(function (post) {
+            //     // TODO -- fix this for image race condition
+            //     // should create a URL simultaneously with state.post
+            //     if (post.sync === true) return
+            //     // if (!state.posts()) return state.posts.set([post])
+            //     var arr = (state.posts() || [])
+            //     arr.unshift(post)
+            //     state.posts.set(arr)
+            // }),
+            S.filter(function (post) {
+                return post.value
+            }),
+            getUrlForPost(),
+            S.drain(function ([hash, url, post]) {
+                console.log('live update', arguments)
+
+                sbot.blobs.has(hash, function (err, res) {
+                    if (!res) {
+                        console.log('miss', err, res)
+
+                        S(
+                            sbot.blobs.get(hash),
+                            S.collect(function (err, res) {
+                                console.log('blobs.get', err, res)
+                            })
+                        )
+
+                        sbot.blobs.want(hash, {}, function(err, res) {
+                            console.log('want cb', err, res)
+                        })
+                    }
+                })
+
+                if (state.postUrls[hash]) return
+                var newState = {}
+                newState[hash] = url
+                state.postUrls.set(xtend(state.postUrls(), newState))
+
+                if (post.sync === true) return
+                var arr = (state.posts() || [])
+                arr.unshift(post)
+                state.posts.set(arr)
+
+            }, function done (err) {
+                if (err) return console.log('error', err)
+                console.log('all done', arguments)
+            })
+        )
+    }
+
     return {
         getPosts,
         getProfile,
@@ -166,7 +222,8 @@ function App (sbot) {
         getUrlForHash,
         getUrlsForPosts,
         getUrlForPost,
-        postStream
+        postStream,
+        liveUpdates
     }
 }
 
