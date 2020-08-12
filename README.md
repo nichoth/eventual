@@ -26,6 +26,7 @@ Each YAML-file inside your .github/workflows-directory constitutes one workflow.
 
 ----------------------------------------
 
+
 `index.js` is where things start. We call the fns defined in `app.js`.
 
 `start.js` is where we connect the view renderer & app
@@ -34,6 +35,6 @@ Each YAML-file inside your .github/workflows-directory constitutes one workflow.
 
 Keep start & client as is, but subscription should be called in `index`. Rename `start` to `start-app` or something. `app` should be used only in subscription file, `app` should be the only one that uses `sbot` b/c that way we can swap it out with a different backend that has the same API.
 
-Need to look at `subscrube` and `app` to make the API ok.
+index ->calls-> start
 
 

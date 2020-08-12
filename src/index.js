@@ -1,5 +1,6 @@
 var Start = require('./start')
 var App = require('./app.js')
+var evs = require('./EVENTS')
 var S = require('pull-stream')
 var xtend = require('xtend')
 var subscribe = require('./subscribe')
@@ -16,9 +17,9 @@ Start(function (err, { sbot, state, view }) {
 
 
 
-    view.on('*', function (ev) {
-        console.log('ev', ev)
-    })
+    view.emit(evs.app.start, { ok: 'ok' })
+
+
 
     // console.log('wants', sbot.blobs.ls(() => console.log(arguments)))
     // S(

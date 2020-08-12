@@ -6,6 +6,14 @@ var createHash = require('multiblob/util').createHash
 var ts = require('./types')
 
 function subscribe({ state, view, sbot, app }) {
+    view.on('*', function (ev) {
+        console.log('ev', ev)
+    })
+
+    view.on(evs.app.start, (ev) => {
+        console.log('start', ev)
+    })
+
     view.on(evs.hello.world, () => state.foo.set('bar'))
 
     view.on(evs.pubs.add, function (invite) {
