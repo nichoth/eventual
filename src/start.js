@@ -19,7 +19,7 @@ function start (cb) {
             if (m && typeof m.action === 'function') {
                 var { events } = m.action(m)
             }
-            // if (m) var { events } = m.action(m)
+            
             (events || []).forEach(function(ev) {
                 view.emit(ev, m)
             })

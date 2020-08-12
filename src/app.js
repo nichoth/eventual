@@ -72,6 +72,17 @@ function App (sbot) {
                 // console.log('mentions', post.value.content.mentions)
                 return [hash, post]
             }),
+            // S.asyncMap(function ([hash, post], cb) {
+            //     console.log('blobs start', hash)
+            //     S(
+            //         sbot.blobs.get(hash),
+            //         S.collect(function (err, res) {
+            //             console.log('blobs.get', err, res)
+            //             cb(err, [hash, post])
+            //         })
+            //     )
+            // }),
+            //
             // S.through(function ([hash, post]) {
             //     console.log('hash', hash)
             //     S(
@@ -81,7 +92,7 @@ function App (sbot) {
             //         })
             //     )
             // }),
-            S.filter(Boolean),
+            // S.filter(Boolean),
             S.map(function ([hash, post]) {
                 return [hash, toURL(hash), post]
             })
