@@ -30,8 +30,6 @@ function start (cb) {
             throw err
         }
 
-        // subscribe({ state, view, sbot })
-
         if (process.env.NODE_ENV === 'development' ||
             process.env.NODE_ENV === 'test') {
             window.app = { state, view, EVENTS: evs, sbot }
