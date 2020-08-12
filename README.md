@@ -1,5 +1,7 @@
 # eventual gram
 
+[![Awesome Humane Tech](https://raw.githubusercontent.com/humanetech-community/awesome-humane-tech/main/humane-tech-badge.svg?sanitize=true)](https://github.com/humanetech-community/awesome-humane-tech)
+
 ssb-based photo sharing
 
 
