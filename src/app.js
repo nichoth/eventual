@@ -7,6 +7,14 @@ var toURL = require('ssb-serve-blobs/id-to-url')
 // var Catch = require('pull-catch')
 
 function App (state, sbot) {
+    var isDev = (process.env.NODE_ENV === 'development' ||
+        process.env.NODE_ENV === 'test')
+    if (isDev) {
+        window.app = window.app || {}
+        window.app.getUrlForHash = getUrlForHash
+        window.app.toURL = toURL
+    }
+
     function setName ({ id, name }, cb) {
         sbot.publish({
             type: 'about',
@@ -34,12 +42,6 @@ function App (state, sbot) {
                 cb(err, profile)
             })
         })
-    }
-
-    if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-        window.app = window.app || {}
-        window.app.getUrlForHash = getUrlForHash
-        window.app.toURL = toURL
     }
 
     function getUrlForHash (hash, cb) {
