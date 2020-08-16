@@ -37,4 +37,14 @@ Keep start & client as is, but subscription should be called in `index`. Rename 
 
 index ->calls-> start
 
+-----------------------------------------
 
+todo
+* `subscribe` should not depend on sbot, just our own api. that way you can swap out different backends
+
+```js
+var app = App(state, 3box)
+var app = App(state, sbot)
+var app = App(state, textile)
+subscribe({ app, view, state })
+```

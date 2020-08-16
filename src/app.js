@@ -4,6 +4,8 @@ var S = require('pull-stream')
 var after = require('after')
 var ts = require('./types')
 var toURL = require('ssb-serve-blobs/id-to-url')
+var createHash = require('multiblob/util').createHash
+var fileReaderStream = require('filereader-pull-stream')
 // var Catch = require('pull-catch')
 
 function App (state, sbot) {
@@ -13,6 +15,19 @@ function App (state, sbot) {
         window.app = window.app || {}
         window.app.getUrlForHash = getUrlForHash
         window.app.toURL = toURL
+    }
+
+    function acceptInvite (invite) {
+        return sbot.invite.accept(invite, function (err, res) {
+            if (err) {
+                console.log('pubs add err', err)
+                return state.pubs.err.set(err)
+            }
+
+            console.log('pubs add', res)
+            if (state.pubs.err()) state.pubs.err.set(null)
+            state.pubs.list.set(res)
+        })
     }
 
     function setName ({ id, name }, cb) {
@@ -41,6 +56,19 @@ function App (state, sbot) {
                 console.log('profile', profile)
                 cb(err, profile)
             })
+        })
+    }
+
+    function setProfile (newName) {
+        sbot.publish({
+            type: 'about',
+            about: state().me.id,
+            name: newName
+        }, function (err, msg) {
+            if (err) throw err
+            state.me.set(xtend(state.me(), {
+                name: msg.value.content.name
+            }))
         })
     }
 
@@ -199,7 +227,7 @@ function App (state, sbot) {
                     }
                 })
 
-                if (state.postUrls[hash]) return
+                if (state().postUrls[hash]) return
                 var newState = {}
                 newState[hash] = url
                 state.postUrls.set(xtend(state.postUrls(), newState))
@@ -216,6 +244,64 @@ function App (state, sbot) {
         )
     }
 
+    function setAvatar (file, cb) {
+        var hasher = createHash('sha256')
+
+        S(
+            fileReaderStream(file),
+            hasher,
+            sbot.blobs.add(function (err, hash) {
+                if (err) return cb(err)
+                sbot.publish({
+                    type: 'about',
+                    about: state.me().id,
+                    image: {
+                        link: '&' + hasher.digest
+                        // width: widthInPx,   // optional, but recommended
+                        // height: heightInPx, // optional, but recommended
+                        // name: fileName,     // optional, but recommended
+                        // size: sizeInBytes,  // optional, but recommended
+                        // type: mimeType      // optional, but recommended
+                    }
+                }, function (err, res) {
+                    if (err) return cb(err)
+                    var opts = { res: res, hash: '&' + hasher.digest }
+                    // /*blob: file*/ } 
+                    cb(null, opts)
+                })
+            })
+        )
+    }
+
+    function newPost ({ image, text }, cb) {
+        var hasher = createHash('sha256')
+
+        S(
+            fileReaderStream(image),
+            hasher,
+            sbot.blobs.add(function (err, _hash) {
+                if (err) throw err
+                var hash = '&' + hasher.digest
+                
+                sbot.publish({
+                    type: ts.post,
+                    text: text || '',
+                    mentions: [{
+                        link: hash,        // the hash given by blobs.add
+                    //   name: 'hello.txt', // optional, but recommended
+                    //   size: 12,          // optional, but recommended
+                    //   type: 'text/plain' // optional, but recommended
+                    }]
+                }, function (err, data) {
+                    // console.log('new post', err, data, _hash)
+                    if (err) return cb(err)
+                    cb.apply(null, arguments)
+                })
+            })
+        )
+    }
+
+
     return {
         getPosts,
         getProfile,
@@ -225,7 +311,10 @@ function App (state, sbot) {
         getUrlsForPosts,
         getUrlForPost,
         postStream,
-        liveUpdates
+        liveUpdates,
+        acceptInvite,
+        setProfile,
+        newPost
     }
 }
 
