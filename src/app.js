@@ -194,7 +194,7 @@ function App (state, sbot) {
     // here return a stream, then you don't need to depend on state
 
     // listen for live messages
-    function liveUpdates () {
+    function liveUpdates (state) {
         console.log('live start')
         S(
             postStream(),

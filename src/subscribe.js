@@ -1,8 +1,5 @@
 var evs = require('./EVENTS')
 var xtend = require('xtend')
-var S = require('pull-stream')
-var createHash = require('multiblob/util').createHash
-var ts = require('./types')
 
 function subscribe({ state, view, app }) {
     view.on('*', function (ev) {
@@ -12,7 +9,7 @@ function subscribe({ state, view, app }) {
     view.on(evs.app.start, (ev) => {
         console.log('start', ev)
 
-        app.liveUpdates()
+        app.liveUpdates(state)
 
         app.getProfile(function (err, profile) {
             if (err) throw err
@@ -27,24 +24,12 @@ function subscribe({ state, view, app }) {
         })
     })
 
-    view.on(evs.hello.world, () => state.foo.set('bar'))
-
     view.on(evs.pubs.add, function (invite) {
         app.acceptInvite(invite)
     })
 
     view.on(evs.profile.save, function (newName) {
         app.setProfile(newName)
-        // sbot.publish({
-        //     type: 'about',
-        //     about: state().me.id,
-        //     name: newName
-        // }, function (err, msg) {
-        //     if (err) throw err
-        //     state.me.set(xtend(state.me(), {
-        //         name: msg.value.content.name
-        //     }))
-        // })
     })
 
     view.on(evs.profile.setAvatar, function (ev) {
@@ -82,4 +67,3 @@ function subscribe({ state, view, app }) {
 }
 
 module.exports = subscribe
-
