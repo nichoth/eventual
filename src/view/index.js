@@ -71,7 +71,4 @@ function View (props) {
     </div>
 }
 
-
-
 module.exports = View
-
