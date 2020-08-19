@@ -10,7 +10,7 @@ function View (props) {
     console.log('render', props)
     var { emit } = props
 
-    view.emit(evs.app.start, { ok: 'ok' })
+    emit(evs.app.start, { ok: 'ok' })
 
     // for electron which starts with a file path
     var { pathname } = props.route

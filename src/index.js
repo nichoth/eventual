@@ -1,6 +1,5 @@
 var Start = require('./start')
 var App = require('./app.js')
-var evs = require('./EVENTS')
 var subscribe = require('./subscribe')
 
 Start(function (err, { sbot, state, view }) {
